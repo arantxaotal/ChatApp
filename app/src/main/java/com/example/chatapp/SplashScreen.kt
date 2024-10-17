@@ -13,14 +13,14 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        object : CountDownTimer(3000, 1000) {
+        object : CountDownTimer(8000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
 
             }
 
             override fun onFinish() {
                 // Start your main activity here
-                startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                startActivity(Intent(this@SplashScreen, Inicio::class.java))
                 finish()
             }
         }.start()
