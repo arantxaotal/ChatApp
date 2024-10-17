@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Talkie</string>
     <string name="registro_btn">"Registrarse"</string>
-        <string name="ingresar_btn">"Ingresar"</string>
-
+    <string name="ingresar_btn">"Ingresar"</string>
+    <string name="crear_cuenta_btn">"Crear Cuenta"</string>">
+    <string name="atras_btn">"Atrás"</string>
+    <string name="iniciar_sesion_btn">"Iniciar Sesión"</string>
 </resources>

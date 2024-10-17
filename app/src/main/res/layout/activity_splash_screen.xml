@@ -18,20 +18,8 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="animatedsplash.json"
+            app:lottie_fileName="myphone.json"
             app:lottie_loop="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/racing_sans_one"
-            android:text="@string/app_name"
-            android:textColor="#673AB7"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:visibility="visible"
-            tools:visibility="visible" />
 
     </LinearLayout>
 

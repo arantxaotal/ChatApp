@@ -16,13 +16,13 @@
         android:gravity="center"
         >
 
-        <ImageView
-            android:layout_width="285dp"
-            android:layout_height="239dp"
-            android:layout_gravity="center"
-            android:background="#00FFFFFF"
-            android:padding="30dp"
-            android:src="@mipmap/ic_chat_round" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="myphone.json"
+            app:lottie_loop="true" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

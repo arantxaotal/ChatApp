@@ -22,13 +22,11 @@ class Inicio : AppCompatActivity() {
 
         btn_login.setOnClickListener{
             val intent = Intent(this, Login::class.java)
-            Toast.makeText(applicationContext, "Registros", Toast.LENGTH_SHORT).show()
             startActivity(intent)
 
         }
         btn_registro.setOnClickListener{
             val intent = Intent(this, Registro::class.java)
-            Toast.makeText(applicationContext, "Login", Toast.LENGTH_SHORT).show()
             startActivity(intent)
 
         }
