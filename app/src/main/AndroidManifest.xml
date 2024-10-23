@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_chat_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ChatApp"
+        android:theme="@style/ChatApp_no_bar"
         tools:targetApi="31">
         <activity
             android:name=".Login"
@@ -31,6 +31,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/Theme.ChatApp"
             android:name=".MainActivity"
             android:exported="true" />
 
