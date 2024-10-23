@@ -57,7 +57,13 @@
             android:ems="10"
             android:hint="contraseña"
             android:inputType="textPassword"/>
-
+        <EditText
+            android:id="@+id/password_repeat"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="repetir contraseña"
+            android:inputType="textPassword"/>
         <EditText
             android:id="@+id/telefono"
             android:layout_width="300dp"
