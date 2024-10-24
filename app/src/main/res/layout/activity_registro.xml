@@ -33,12 +33,12 @@
             >
 
             <EditText
-
+                android:drawableStart="@drawable/name"
                 android:id="@+id/nombre"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Nombre"
+                android:hint="  Nombre"
                 android:inputType="text"
                 android:visibility="visible" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -49,11 +49,12 @@
             android:textColorHint="@color/grey"
             >
         <EditText
+            android:drawableStart="@drawable/name"
             android:id="@+id/apellidos"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Apellidos"
+            android:hint="  Apellidos"
             android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -63,11 +64,12 @@
             android:textColorHint="@color/grey"
             >
         <EditText
+            android:drawableStart="@drawable/baseline_email_24"
             android:id="@+id/email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Email"
+            android:hint="  Email"
             android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -80,11 +82,12 @@
 
             >
             <EditText
+                android:drawableStart="@drawable/password"
                 android:id="@+id/password"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Contraseña"
+                android:hint="  Contraseña"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -96,11 +99,12 @@
             android:textColorHint="@color/grey"
             >
         <EditText
+            android:drawableStart="@drawable/password"
             android:id="@+id/password_repeat"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Repetir contraseña"
+            android:hint="  Repetir contraseña"
             android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -110,11 +114,12 @@
             android:textColorHint="@color/grey"
             >
         <EditText
+            android:drawableStart="@drawable/baseline_phone_24"
             android:id="@+id/telefono"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Teléfono"
+            android:hint="  Teléfono"
             android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
         <Button

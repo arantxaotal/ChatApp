@@ -6,4 +6,6 @@
     <string name="atras_btn">"Atrás"</string>
     <string name="iniciar_sesion_btn">"Iniciar Sesión"</string>
     <string name="menu_salir">"Cerrar Sesión"</string>
+    <string name="ajustes_user">"Ajustes"</string>
+    <string name="srch">Buscar\n</string>
 </resources>

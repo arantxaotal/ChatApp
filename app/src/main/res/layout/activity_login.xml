@@ -33,7 +33,8 @@
             android:textColorHint="@color/grey"
             >
         <EditText
-            android:hint="email"
+            android:drawableStart="@drawable/baseline_email_24"
+            android:hint="  Email"
             android:id="@+id/email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -50,11 +51,12 @@
             android:textColorHint="@color/grey"
             >
         <EditText
+            android:drawableStart="@drawable/password"
             android:id="@+id/password"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="contraseña"
+            android:hint="  Contraseña"
             android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
         <Button
