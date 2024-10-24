@@ -26,15 +26,29 @@
             android:visibility="visible"
             tools:visibility="visible" />
 
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
         <EditText
+            android:hint="email"
             android:id="@+id/email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="email"
-            android:inputType="textEmailSubject" />
 
+            android:inputType="textEmailSubject" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/purple"
+            android:textColorHint="@color/grey"
+            >
         <EditText
             android:id="@+id/password"
             android:layout_width="300dp"
@@ -42,14 +56,16 @@
             android:ems="10"
             android:hint="contraseña"
             android:inputType="textPassword" />
-
+        </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:layout_marginTop="20dp"
             android:id="@+id/iniciar_sesion_btn"
             android:text="@string/iniciar_sesion_btn"
             android:layout_width="200dp"
+            android:backgroundTint="@color/purple"
             android:layout_height="wrap_content"/>
         <Button
+            android:backgroundTint="@color/purple"
             android:id="@+id/atras_btn"
             android:text="@string/atras_btn"
             android:layout_width="200dp"

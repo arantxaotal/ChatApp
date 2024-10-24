@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ChatApp" parent="Theme.Material3.Light">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <style name="Base.Theme.ChatApp" parent="Theme.Material3.Light">
+            <item name="toolbarStyle">@style/MyToolbar</item>
+    </style>
+    <style name="MyToolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@color/purple</item>
+
     </style>
     <style name="ChatApp_no_bar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->

@@ -35,12 +35,14 @@
             android:visibility="visible"
             tools:visibility="visible" />
         <Button
+            android:backgroundTint="@color/purple"
             android:layout_marginTop="30dp"
             android:id="@+id/ingresar_btn"
             android:text="@string/ingresar_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"/>
         <Button
+            android:backgroundTint="@color/purple"
             android:id="@+id/registro_btn"
             android:text="@string/registro_btn"
             android:layout_width="200dp"

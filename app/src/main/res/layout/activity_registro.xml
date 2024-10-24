@@ -25,15 +25,29 @@
             android:textStyle="bold"
             android:visibility="visible"
             tools:visibility="visible" />
-
-        <EditText
-            android:id="@+id/nombre"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Nombre"
-            android:inputType="text" />
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
 
+            <EditText
+
+                android:id="@+id/nombre"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Nombre"
+                android:inputType="text"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
         <EditText
             android:id="@+id/apellidos"
             android:layout_width="300dp"
@@ -41,43 +55,77 @@
             android:ems="10"
             android:hint="Apellidos"
             android:inputType="text" />
-
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
         <EditText
             android:id="@+id/email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="email"
+            android:hint="Email"
             android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/password"
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="contraseña"
-            android:inputType="textPassword"/>
+            style="@style/Widget.Design.TextInputLayout"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/purple"
+            android:textColorHint="@color/grey"
+
+            >
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Contraseña"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/purple"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
         <EditText
             android:id="@+id/password_repeat"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="repetir contraseña"
+            android:hint="Repetir contraseña"
             android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
         <EditText
             android:id="@+id/telefono"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="teléfono"
+            android:hint="Teléfono"
             android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
         <Button
+            android:backgroundTint="@color/purple"
             android:layout_marginTop="20dp"
             android:id="@+id/crear_cuenta_btn"
             android:text="@string/crear_cuenta_btn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"/>
         <Button
+            android:backgroundTint="@color/purple"
             android:id="@+id/atras_btn"
             android:text="@string/atras_btn"
             android:layout_width="200dp"
