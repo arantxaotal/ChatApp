@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fetchUsers()
+        list_view.setOnItemClickListener { parent, view, position, id ->
+            val intent = Intent(this, Conversation::class.java)
+            startActivity(intent)
+        }
 
 
 
