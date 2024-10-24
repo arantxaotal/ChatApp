@@ -103,9 +103,14 @@ class Registro : AppCompatActivity() {
                     val hashMap: HashMap<String, Any> = HashMap()
                     val h_nombre_usuario: String = nombre.text.toString()
                     val h_email_usuario: String = email_text.text.toString()
+                    val h_apellidos_usuario: String = apellidos.text.toString()
+                    val h_telefono_usuario: String = telefono.text.toString()
+
 
                     hashMap["uid"] = uid
                     hashMap["nombre_usuario"] = h_nombre_usuario
+                    hashMap["apellidos_usuario"] = h_apellidos_usuario
+                    hashMap["telefono_usuario"] = h_telefono_usuario
                     hashMap["email_usuario"] = h_email_usuario
                     hashMap["imagen"] = ""
                     hashMap["buscar"] = h_nombre_usuario.lowercase()
