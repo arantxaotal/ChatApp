@@ -36,27 +36,51 @@ class Login : AppCompatActivity() {
 
         btn_iniciar_sesion.setOnClickListener{
 
-            firebaseAuth.signInWithEmailAndPassword(email_text.getText().toString(), password.getText().toString())
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-
-                        val user = firebaseAuth.currentUser
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        Toast.makeText(this, "Sesión iniciada", Toast.LENGTH_SHORT).show()
-                    } else {
-                        // If sign in fails, display a message to the user.
-
-                        Toast.makeText(
-                            baseContext,
-                            "Authentication failed.",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    }
-                }
+                ValidarDatos()
 
         }
+
+    }
+
+    private fun ValidarDatos(){
+        val email = email_text.text.toString()
+        val password = password.text.toString()
+        if(email.isEmpty())
+        {
+            Toast.makeText(this, "Por favor, complete su email", Toast.LENGTH_SHORT).show()
+        }
+        else if(password.isEmpty())
+        {
+            Toast.makeText(this, "Por favor, complete su contraseña", Toast.LENGTH_SHORT).show()
+        }else
+        {
+            LoginUsuario(email, password)
+        }
+
+
+    }
+
+    private fun LoginUsuario(email: String, password: String)
+    {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+
+                    val user = firebaseAuth.currentUser
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    Toast.makeText(this, "Sesión iniciada", Toast.LENGTH_SHORT).show()
+                } else {
+                    // If sign in fails, display a message to the user.
+
+                    Toast.makeText(
+                        baseContext,
+                        "Fallo de autenticación",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
 
     }
 }
