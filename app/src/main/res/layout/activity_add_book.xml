@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registro"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBook">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/racing_sans_one"
+            android:text="Libro"
+            android:textColor="#673AB7"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            tools:visibility="visible" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
+
+            <EditText
+                android:drawableStart="@drawable/baseline_library_books_24"
+                android:id="@+id/titulo"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="  Titulo"
+                android:inputType="text"
+                android:visibility="visible" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
+            <EditText
+                android:drawableStart="@drawable/baseline_date_range_24"
+                android:id="@+id/ano_publicacion"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="  Año de publicación"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
+            <EditText
+                android:drawableStart="@drawable/name"
+                android:id="@+id/autor"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="  Autor"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
+            <EditText
+                android:drawableStart="@drawable/baseline_bookmark_border_24"
+                android:id="@+id/editorial"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="  Editorial"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
+            <EditText
+                android:drawableStart="@drawable/baseline_qr_code_24"
+                android:id="@+id/ISBN"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="  ISBN"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            >
+            <EditText
+                android:drawableStart="@drawable/baseline_view_headline_24"
+                android:id="@+id/sinopsis"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="  Sinopsis"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textColorHint="@color/grey"
+            />
+        <Button
+            android:backgroundTint="@color/purple"
+            android:layout_marginTop="20dp"
+            android:id="@+id/crea_libro_btn"
+            android:text="@string/crear_libro_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:backgroundTint="@color/purple"
+            android:id="@+id/ver_libros_btn"
+            android:text="@string/ver_libros_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</RelativeLayout>

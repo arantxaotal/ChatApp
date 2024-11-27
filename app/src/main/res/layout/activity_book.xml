@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registro"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBook">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/racing_sans_one"
+            android:text="Libro"
+            android:textColor="#673AB7"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            tools:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/libro_nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Nombre"
+                android:textSize="20sp"
+                android:visibility="visible"
+                tools:visibility="visible" />
+        <ListView
+            android:id="@+id/lista_capitulos"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="10dp"
+            android:visibility="visible"
+            tools:visibility="visible" />
+
+
+        <Button
+            android:backgroundTint="@color/purple"
+            android:layout_marginTop="20dp"
+            android:id="@+id/add_capitulo_btn"
+            android:text="@string/add_capitulo_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:backgroundTint="@color/purple"
+            android:id="@+id/ver_libros_btn"
+            android:text="@string/ver_libros_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</RelativeLayout>

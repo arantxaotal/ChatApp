@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var list_view: ListView
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseRef: DatabaseReference
+    private lateinit var add_button: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         fetchUsers()
         list_view.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, Conversation::class.java)
+            startActivity(intent)
+        }
+        add_button = findViewById(R.id.floatingActionButton)
+        add_button.setOnClickListener {
+            val intent = Intent(this, AddBook::class.java)
             startActivity(intent)
         }
 
