@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         fetchUsers()
         list_view.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, Conversation::class.java)
+            val intent = Intent(this, Book::class.java)
             startActivity(intent)
         }
         add_button = findViewById(R.id.floatingActionButton)
