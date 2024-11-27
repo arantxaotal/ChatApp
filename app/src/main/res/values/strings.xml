@@ -9,6 +9,7 @@
     <string name="menu_salir">"Cerrar Sesión"</string>
     <string name="ajustes_user">"Ajustes"</string>
     <string name="srch">Buscar\n</string>
-    <string name="add_capitulo_btn">"Grabar Capítulo"</string>">
+    <string name="add_capitulo_btn">"Importar Capítulo"</string>">
     <string name="ver_libros_btn">"Ver Libros"</string>">
+    <string name="anadir_capitulo_btn">"Añadir capítulo"</string>
 </resources>
