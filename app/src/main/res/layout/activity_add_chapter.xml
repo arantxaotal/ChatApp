@@ -42,58 +42,16 @@
                 android:inputType="text"
                 android:visibility="visible" />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Design.TextInputLayout"
-            android:textColorHint="@color/grey"
-            />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Design.TextInputLayout"
-            android:textColorHint="@color/grey"
-            />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Design.TextInputLayout"
-            android:textColorHint="@color/grey"
-            />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Design.TextInputLayout"
-            android:textColorHint="@color/grey"
-            />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Design.TextInputLayout"
-            android:textColorHint="@color/grey"
-            />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Design.TextInputLayout"
-            android:textColorHint="@color/grey"
-            >
-            <EditText
-                android:drawableStart="@drawable/baseline_file_upload_24"
-                android:id="@+id/importar_audio"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="  Importar audio"
-                android:inputType="text" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.Design.TextInputLayout"
-            android:textColorHint="@color/grey"
-            />
+
+        <Button
+            android:drawableTop="@drawable/baseline_file_upload_24"
+            android:backgroundTint="@color/light_green"
+            android:layout_marginTop="20dp"
+            android:id="@+id/subir_audio_btn"
+            android:text="@string/subir_audio_btn"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"/>
         <Button
             android:backgroundTint="@color/purple"
             android:layout_marginTop="20dp"

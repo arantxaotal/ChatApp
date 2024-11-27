@@ -12,4 +12,5 @@
     <string name="add_capitulo_btn">"Importar Capítulo"</string>">
     <string name="ver_libros_btn">"Ver Libros"</string>">
     <string name="anadir_capitulo_btn">"Añadir capítulo"</string>
+    <string name="subir_audio_btn">"Subir audio"</string>
 </resources>
