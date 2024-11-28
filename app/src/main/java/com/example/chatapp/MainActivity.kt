@@ -26,9 +26,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        fetchUsers()
+        fetchBooks()
         list_view.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, WatchBook::class.java)
+            intent.putExtra("libro_nombre", list_view.getItemAtPosition(position).toString());
             startActivity(intent)
         }
         add_button = findViewById(R.id.floatingActionButton)
@@ -42,16 +43,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun fetchUsers() {
-        list_view = findViewById(R.id.usuario_list)
-        databaseRef = FirebaseDatabase.getInstance().getReference("Users/")
+    private fun fetchBooks() {
+        list_view = findViewById(R.id.book_list)
+        databaseRef = FirebaseDatabase.getInstance().getReference("Books/")
         val array = ArrayList<String>()
         val eventListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (ds in dataSnapshot.children) {
-                    val nombre_usuario = ds.child("nombre_usuario").getValue(String::class.java)
-                    val apellidos_usuario = ds.child("apellidos_usuario").getValue(String::class.java)
-                    array.add(nombre_usuario + " " + apellidos_usuario)
+                    val titulo = ds.child("titulo").getValue(String::class.java)
+                    val autor = ds.child("autor").getValue(String::class.java)
+                    array.add(titulo + " (" + autor + ")")
                 }
                 val arrayAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, array)
                 list_view.adapter = arrayAdapter
