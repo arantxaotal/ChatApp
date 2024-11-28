@@ -16,7 +16,7 @@
             android:name=".AddChapter"
             android:exported="false" />
         <activity
-            android:name=".Book"
+            android:name=".WatchBook"
             android:exported="false" />
         <activity
             android:name=".AddBook"

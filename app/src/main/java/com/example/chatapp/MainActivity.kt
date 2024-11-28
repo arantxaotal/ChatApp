@@ -1,9 +1,7 @@
 package com.example.chatapp
 
-import android.R.array
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
@@ -30,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         fetchUsers()
         list_view.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, Book::class.java)
+            val intent = Intent(this, WatchBook::class.java)
             startActivity(intent)
         }
         add_button = findViewById(R.id.floatingActionButton)

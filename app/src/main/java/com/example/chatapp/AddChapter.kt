@@ -18,7 +18,7 @@ class AddChapter : AppCompatActivity() {
         }
         atras_btn = findViewById(R.id.atras_btn_libro)
         atras_btn.setOnClickListener{
-            val intent = Intent(this, Book::class.java)
+            val intent = Intent(this, WatchBook::class.java)
             startActivity(intent)
         }
 

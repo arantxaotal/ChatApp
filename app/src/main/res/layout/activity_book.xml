@@ -5,7 +5,7 @@
     android:id="@+id/registro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Book">
+    tools:context=".WatchBook">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
