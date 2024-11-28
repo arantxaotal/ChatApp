@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chatapp.recycleview.item.Book
 import com.example.chatapp.recycleview.item.Chapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -24,7 +25,7 @@ class AddChapter : AppCompatActivity() {
     private lateinit var database : DatabaseReference
     lateinit var nombre_capitulo : TextView
     lateinit var path_view : TextView
-    lateinit var subir_audio_btn : Button
+    lateinit var subir_audio_btn : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         database = Firebase.database.reference
