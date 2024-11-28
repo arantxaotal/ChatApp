@@ -23,18 +23,13 @@ class AddBook : AppCompatActivity() {
     private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val ref = FirebaseDatabase.getInstance().getReference("Books")
-        database = Firebase.database.reference
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_book)
+        val ref = FirebaseDatabase.getInstance().getReference("Books")
+        database = Firebase.database.reference
         create_btn = findViewById(R.id.crea_libro_btn)
         create_btn.setOnClickListener {
-            titulo = findViewById(R.id.titulo)
-            autor = findViewById(R.id.autor)
-            sinopsis = findViewById(R.id.sinopsis); // Make sure user insert date into edittext in this format.
-            libro_nuevo = Book(titulo.text.toString(), autor.text.toString(), sinopsis.text.toString())
-
-            database.child("Books").child(libro_nuevo.id).setValue(libro_nuevo)
+            crearLibro()
             val intent = Intent(this, WatchBook::class.java)
             startActivity(intent)
         }
@@ -44,5 +39,13 @@ class AddBook : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    private fun crearLibro() {
+        titulo = findViewById(R.id.titulo)
+        autor = findViewById(R.id.autor)
+        sinopsis = findViewById(R.id.sinopsis); // Make sure user insert date into edittext in this format.
+        libro_nuevo = Book(titulo.text.toString(), autor.text.toString(), sinopsis.text.toString())
+        database.child("Books").child(libro_nuevo.id).setValue(libro_nuevo)
     }
 }

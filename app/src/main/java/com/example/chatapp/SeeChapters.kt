@@ -24,7 +24,8 @@ class SeeChapters : AppCompatActivity() {
 
         crear_capitulo_btn.setOnClickListener{
             val intent = Intent(this, AddChapter::class.java)
-            intent.putExtra("libro_nombre", titulo_libro.text.toString());
+            intent.putExtra("nombre", titulo_libro.text.toString().split(" - ")[0]);
+            intent.putExtra("autor", titulo_libro.text.toString().split(" - ")[1]);
             startActivity(intent)
         }
         volver.setOnClickListener{

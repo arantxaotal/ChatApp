@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 for (ds in dataSnapshot.children) {
                     val titulo = ds.child("titulo").getValue(String::class.java)
                     val autor = ds.child("autor").getValue(String::class.java)
-                    array.add(titulo + " (" + autor + ")")
+                    array.add(titulo + " - " + autor)
                 }
                 val arrayAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_list_item_1, array)
                 list_view.adapter = arrayAdapter
