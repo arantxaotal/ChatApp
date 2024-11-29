@@ -31,7 +31,7 @@
         <ListView
             android:id="@+id/chapter_list"
             android:layout_width="match_parent"
-            android:layout_height="600dp" />
+            android:layout_height="450dp" />
 
         <Button
             android:backgroundTint="@color/purple"

@@ -43,8 +43,9 @@ class AddChapter : AppCompatActivity() {
         }
         subir_audio_btn = findViewById(R.id.subir_audio_btn)
         subir_audio_btn.setOnClickListener{
-            intent.type = "audio/*"
-            intent.action = Intent.ACTION_GET_CONTENT
+            val intent = Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(Intent.createChooser(intent, "Select Audio"), 111)
 
         }
