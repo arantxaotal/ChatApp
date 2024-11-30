@@ -64,7 +64,7 @@ class AddChapter : AppCompatActivity() {
 
     private fun crearCapitulo() {
         val db = FirebaseFirestore.getInstance()
-        val booksRef = db.collection("Books").whereEqualTo("nombre", intent.getStringExtra("nombre")).whereEqualTo("autor",intent.getStringExtra("autor")).get()
+        val booksRef = db.collection("Books").whereEqualTo("id", intent.getStringExtra("id")).get()
         val book = booksRef.result.documents[0].toObject(Book::class.java)
         nombre_capitulo = findViewById(R.id.namechapter)
         path_view = findViewById(R.id.path)

@@ -11,41 +11,42 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp"
-        android:gravity="center"
+        android:gravity="left
+"
         >
 
         <TextView
             android:id="@+id/titulo_libro"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="match_parent"
             android:fontFamily="@font/racing_sans_one"
-            android:text="Libro : Nombre"
+            android:text="Libro"
             android:textColor="#673AB7"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:visibility="visible"
-            tools:visibility="visible" />
+            android:textStyle="bold" />
 
 
-        <ListView
-            android:id="@+id/chapter_list"
-            android:layout_width="match_parent"
-            android:layout_height="450dp" />
-
-        <Button
-            android:backgroundTint="@color/purple"
-            android:layout_marginTop="20dp"
-            android:id="@+id/crear_capitulo_btn"
-            android:text="@string/crear_capitulo_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:backgroundTint="@color/purple"
-            android:id="@+id/volver_btn"
-            android:text="@string/atras_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
+        <TableLayout
+            android:id="@+id/chapter_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TableLayout>
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/crear_capitulo_btn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/baseline_add_24" />
 </RelativeLayout>

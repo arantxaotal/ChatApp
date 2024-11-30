@@ -9,7 +9,6 @@ import org.w3c.dom.Text
 
 class WatchBook(
 ) : AppCompatActivity() {
-    private lateinit var volver_btn : Button
     private lateinit var ver_capitulos_btn : Button
     private lateinit var titulo : TextView
     private lateinit var autor : TextView
@@ -31,11 +30,6 @@ class WatchBook(
         ver_capitulos_btn.setOnClickListener{
             val intent = Intent(this, SeeChapters::class.java)
             intent.putExtra("titulo", titulo.text.toString())
-            startActivity(intent)
-        }
-        volver_btn = findViewById(R.id.volver_btn)
-        volver_btn.setOnClickListener{
-            val intent = Intent(this, Inicio::class.java)
             startActivity(intent)
         }
     }
