@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 
 
 class AddBook : AppCompatActivity() {
-    private lateinit var ver_libros : Button
+
     private lateinit var create_btn: Button
     lateinit var titulo : EditText
     lateinit var autor : EditText
@@ -42,11 +42,7 @@ class AddBook : AppCompatActivity() {
             }
 
         }
-        ver_libros = findViewById(R.id.ver_libros_btn)
-        ver_libros.setOnClickListener{
-            val intent = Intent(this, Inicio::class.java)
-            startActivity(intent)
-        }
+
 
     }
 

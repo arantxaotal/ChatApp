@@ -2,12 +2,15 @@ package com.example.chatapp
 
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.chatapp.recycleview.item.Book
 import com.example.chatapp.recycleview.item.Chapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -58,6 +61,7 @@ class AddChapter : AppCompatActivity() {
     }
 
     private fun crearCapitulo() {
+
         val db = FirebaseFirestore.getInstance()
         val booksRef = db.collection("Books").whereEqualTo("id", intent.getStringExtra("id")).get()
         val book = booksRef.result.documents[0].toObject(Book::class.java)

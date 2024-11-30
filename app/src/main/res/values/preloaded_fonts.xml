@@ -2,10 +2,15 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/carter_one</item>
+        <item>@font/handlee</item>
+        <item>@font/imperial_script</item>
+        <item>@font/la_belle_aurore</item>
         <item>@font/luckiest_guy</item>
+        <item>@font/luxurious_script</item>
         <item>@font/racing_sans_one</item>
         <item>@font/sarina</item>
         <item>@font/sue_ellen_francisco</item>
         <item>@font/zen_dots</item>
+        <item>@font/zeyada</item>
     </array>
 </resources>

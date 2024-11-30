@@ -19,7 +19,7 @@
             android:id="@+id/titulo_libro"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/racing_sans_one"
+            android:fontFamily="@font/la_belle_aurore"
             android:text="Libro"
             android:textColor="#673AB7"
             android:textSize="30sp"

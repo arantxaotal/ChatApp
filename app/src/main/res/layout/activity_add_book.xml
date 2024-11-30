@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/racing_sans_one"
+            android:fontFamily="@font/la_belle_aurore"
             android:text="Libro"
             android:textColor="#673AB7"
             android:textSize="40sp"
@@ -109,12 +109,6 @@
             android:layout_marginTop="20dp"
             android:id="@+id/crea_libro_btn"
             android:text="@string/crear_libro_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:backgroundTint="@color/purple"
-            android:id="@+id/ver_libros_btn"
-            android:text="@string/ver_libros_btn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"/>
 
