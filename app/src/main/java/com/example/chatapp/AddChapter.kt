@@ -36,11 +36,6 @@ class AddChapter : AppCompatActivity() {
             crearCapitulo()
 
         }
-        atras_btn = findViewById(R.id.atras_btn_libro)
-        atras_btn.setOnClickListener{
-            val intent = Intent(this, WatchBook::class.java)
-            startActivity(intent)
-        }
         subir_audio_btn = findViewById(R.id.subir_audio_btn)
         subir_audio_btn.setOnClickListener{
             val intent = Intent(Intent.ACTION_GET_CONTENT);

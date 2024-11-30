@@ -74,12 +74,6 @@
             android:text="@string/anadir_capitulo_btn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"/>
-        <Button
-            android:backgroundTint="@color/purple"
-            android:id="@+id/atras_btn_libro"
-            android:text="@string/atras_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>
