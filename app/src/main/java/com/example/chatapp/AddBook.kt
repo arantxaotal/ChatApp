@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chatapp.recycleview.item.Book
 import com.google.firebase.Firebase
@@ -29,9 +30,17 @@ class AddBook : AppCompatActivity() {
         database = Firebase.database.reference
         create_btn = findViewById(R.id.crea_libro_btn)
         create_btn.setOnClickListener {
-            crearLibro()
-            val intent = Intent(this, WatchBook::class.java)
-            startActivity(intent)
+            val success = crearLibro()
+            if (success)
+            {
+                val intent = Intent(this, Inicio::class.java)
+                startActivity(intent)
+            }else
+            {
+                Toast.makeText(this, "Por favor, rellene todos los campos", Toast.LENGTH_SHORT).show()
+
+            }
+
         }
         ver_libros = findViewById(R.id.ver_libros_btn)
         ver_libros.setOnClickListener{
@@ -41,11 +50,20 @@ class AddBook : AppCompatActivity() {
 
     }
 
-    private fun crearLibro() {
+    private fun crearLibro(): Boolean {
+        var success = true
         titulo = findViewById(R.id.titulo)
         autor = findViewById(R.id.autor)
         sinopsis = findViewById(R.id.sinopsis); // Make sure user insert date into edittext in this format.
-        libro_nuevo = Book(titulo.text.toString(), autor.text.toString(), sinopsis.text.toString())
-        database.child("Books").child(libro_nuevo.id).setValue(libro_nuevo)
+        if (titulo.text.toString().isEmpty() || autor.text.toString().isEmpty() || sinopsis.text.toString().isEmpty()) {
+            success = false
+        }else
+        {
+            libro_nuevo = Book(titulo.text.toString(), autor.text.toString(), sinopsis.text.toString())
+            database.child("Books").child(libro_nuevo.id).setValue(libro_nuevo)
+
+        }
+        return success
+
     }
 }
