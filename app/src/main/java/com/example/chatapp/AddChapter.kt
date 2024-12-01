@@ -21,6 +21,7 @@ import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
+import java.io.FileInputStream
 
 class AddChapter : AppCompatActivity() {
     private lateinit var anadir_capitulo_btn : Button
@@ -41,8 +42,8 @@ class AddChapter : AppCompatActivity() {
         }
         subir_audio_btn = findViewById(R.id.subir_audio_btn)
         subir_audio_btn.setOnClickListener{
-            val intent = Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*/*");
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.setType("*/*")
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             startActivityForResult(Intent.createChooser(intent, "Select Audio"), 111)
 
@@ -55,7 +56,9 @@ class AddChapter : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 111 && resultCode == RESULT_OK) {
             val path = data?.data
+            path_view = findViewById(R.id.path)
             path_view.text = path.toString()
+
         }
 
     }
@@ -74,8 +77,9 @@ class AddChapter : AppCompatActivity() {
         // CREA CAPITULO NOMBRE Y PATH
         database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
         // SUBE ARCHIVO
-        ref.putFile(file)
-
+        //ref.putFile(file)
+        val stream = FileInputStream(File(path))
+        ref.putStream(stream)
 
     }
 
