@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                     val titulo = ds.child("titulo").getValue(String::class.java)
                     val autor = ds.child("autor").getValue(String::class.java)
                     val sinopsis = ds.child("sinopsis").getValue(String::class.java)
-                    val id = ds.key
+                    val id = ds.child("id").getValue(String::class.java)
                     val tituloView = TextView(this@MainActivity)
                     val deleteButton = FloatingActionButton(this@MainActivity)
                     val row = TableRow(this@MainActivity)

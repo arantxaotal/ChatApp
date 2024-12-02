@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,10 +17,11 @@ import com.example.chatapp.recycleview.item.Chapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageMetadata
+import com.google.firebase.storage.storageMetadata
 import java.io.File
 import java.io.FileInputStream
 
@@ -64,22 +66,28 @@ class AddChapter : AppCompatActivity() {
     }
 
     private fun crearCapitulo() {
-
-        val db = FirebaseFirestore.getInstance()
-        val booksRef = db.collection("Books").whereEqualTo("id", intent.getStringExtra("id")).get()
-        val book = booksRef.result.documents[0].toObject(Book::class.java)
-        nombre_capitulo = findViewById(R.id.namechapter)
+        val file_storage = FirebaseStorage.getInstance().reference
+        val id =  intent.getStringExtra("id")
         path_view = findViewById(R.id.path)
         val path = path_view.text.toString()
-        var file = Uri.fromFile(File(path))
-        val capitulo_nuevo = Chapter(nombre_capitulo.text.toString(),"audios/${file.lastPathSegment}",book!!.id)
-        val ref = FirebaseStorage.getInstance().reference.child("audios/${file.lastPathSegment}")
-        // CREA CAPITULO NOMBRE Y PATH
-        database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
-        // SUBE ARCHIVO
-        //ref.putFile(file)
-        val stream = FileInputStream(File(path))
-        ref.putStream(stream)
+        var file = File(path)
+        var uri = Uri.fromFile(file)
+        nombre_capitulo = findViewById<TextView>(R.id.namechapter)
+        val capitulo_nuevo = Chapter("audios/${uri.lastPathSegment}.mp3",id.toString(),nombre_capitulo.text.toString())
+        // Create file metadata including the content type
+        var metadata = storageMetadata {
+            contentType = "audio/mp3"
+        }
+
+        // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
+        val uploadTask = file_storage.child("audios/${uri.lastPathSegment}.mp3").putFile(uri,metadata)
+        uploadTask.addOnSuccessListener {
+            //GUARDA DATA EN BD DEL CAPITULO
+            database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
+            Toast.makeText(this, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(this, "Error al subir el audio", Toast.LENGTH_SHORT).show()
+        }
 
     }
 

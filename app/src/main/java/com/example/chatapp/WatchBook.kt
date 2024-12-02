@@ -13,7 +13,7 @@ class WatchBook(
     private lateinit var titulo : TextView
     private lateinit var autor : TextView
     private lateinit var sinopsis : TextView
-        private lateinit var id : String
+    private lateinit var id : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +30,7 @@ class WatchBook(
         ver_capitulos_btn.setOnClickListener{
             val intent = Intent(this, SeeChapters::class.java)
             intent.putExtra("titulo", titulo.text.toString())
+            intent.putExtra("id", id)
             startActivity(intent)
         }
     }

@@ -20,10 +20,11 @@ class SeeChapters : AppCompatActivity() {
         crear_capitulo_btn = findViewById(R.id.crear_capitulo_btn)
         titulo_libro = findViewById(R.id.titulo_libro)
         titulo_libro.text = intent.getStringExtra("titulo")
+        val id = intent.getStringExtra("id")
 
         crear_capitulo_btn.setOnClickListener{
             val intent = Intent(this, AddChapter::class.java)
-            intent.putExtra("id", intent.getStringExtra("id"))
+            intent.putExtra("id", id)
             startActivity(intent)
         }
 
