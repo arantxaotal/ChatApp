@@ -79,38 +79,47 @@ class AddChapter : AppCompatActivity() {
         path_view = findViewById(R.id.path)
         var uri = document_file.uri
         nombre_capitulo = findViewById(R.id.namechapter)
-        val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString())
-
-
-
-        // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
-        val uploadTask = file_storage.child("audios/${name_file}").putFile(uri)
-        uploadTask.addOnSuccessListener {
-            //GUARDA DATA EN BD DEL CAPITULO
-            val databaseReference = database.child("Chapters")
-            databaseReference.orderByChild("path").equalTo("audios/${name_file}")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if (dataSnapshot.exists()) Toast.makeText(this@AddChapter, "Audio existe en otro capítulo", Toast.LENGTH_SHORT).show()
-                        else
-                        {
-                            database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
-                            Toast.makeText(this@AddChapter, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@AddChapter, SeeChapters::class.java)
-                            intent.putExtra("titulo", titulo)
-                            intent.putExtra("id", id)
-                            startActivity(intent)
-                        }
-                    }
-
-                    override fun onCancelled( databaseError: DatabaseError) {
-                    }
-                })
-
-
-        }.addOnFailureListener {
-            Toast.makeText(this, "Error al subir el audio", Toast.LENGTH_SHORT).show()
+        if (nombre_capitulo.text.toString() == "")
+        {
+            Toast.makeText(this, "Nombre de capítulo vacío", Toast.LENGTH_SHORT).show()
         }
+        if (path_view.text.toString() == "")
+        {
+            Toast.makeText(this, "Selecciona un audio", Toast.LENGTH_SHORT).show()
+        }
+        if (nombre_capitulo.text.toString() != "" && path_view.text.toString() != "")
+        {
+            val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString())
+            // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
+            val uploadTask = file_storage.child("audios/${name_file}").putFile(uri)
+            uploadTask.addOnSuccessListener {
+                //GUARDA DATA EN BD DEL CAPITULO
+                val databaseReference = database.child("Chapters")
+                databaseReference.orderByChild("path").equalTo("audios/${name_file}")
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (dataSnapshot.exists()) Toast.makeText(this@AddChapter, "Audio existe en otro capítulo", Toast.LENGTH_SHORT).show()
+                            else
+                            {
+                                database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
+                                Toast.makeText(this@AddChapter, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@AddChapter, SeeChapters::class.java)
+                                intent.putExtra("titulo", titulo)
+                                intent.putExtra("id", id)
+                                startActivity(intent)
+                            }
+                        }
+
+                        override fun onCancelled( databaseError: DatabaseError) {
+                        }
+                    })
+
+
+            }.addOnFailureListener {
+                Toast.makeText(this, "Error al subir el audio", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
     }
 
