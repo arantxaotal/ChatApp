@@ -11,26 +11,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp"
-        android:gravity="left
-"
+        android:gravity="left"
         >
 
         <TextView
-            android:id="@+id/titulo_libro"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/titulo_libro"            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/la_belle_aurore"
             android:text="Libro"
+            android:gravity="center"
             android:textColor="#673AB7"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="visible"
+            tools:visibility="visible"/>
 
 
         <TableLayout
             android:id="@+id/chapter_table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </TableLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 
     </LinearLayout>
 
