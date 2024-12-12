@@ -77,8 +77,8 @@ class AddChapter : AppCompatActivity() {
         val file_storage = FirebaseStorage.getInstance().reference
         val id =  intent.getStringExtra("id")
         path_view = findViewById(R.id.path)
-        var uri = document_file.uri
         nombre_capitulo = findViewById(R.id.namechapter)
+
         if (nombre_capitulo.text.toString() == "")
         {
             Toast.makeText(this, "Nombre de capítulo vacío", Toast.LENGTH_SHORT).show()
@@ -89,6 +89,7 @@ class AddChapter : AppCompatActivity() {
         }
         if (nombre_capitulo.text.toString() != "" && path_view.text.toString() != "")
         {
+            val uri = document_file.uri
             val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString())
             // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
             val uploadTask = file_storage.child("audios/${name_file}").putFile(uri)
