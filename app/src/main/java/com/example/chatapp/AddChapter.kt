@@ -33,6 +33,7 @@ class AddChapter : AppCompatActivity() {
     lateinit var titulo : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        titulo = intent.getStringExtra("titulo").toString()
         database = Firebase.database.reference
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chapter)
@@ -89,10 +90,8 @@ class AddChapter : AppCompatActivity() {
             database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
             Toast.makeText(this, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, SeeChapters::class.java)
-            titulo = intent.getStringExtra("titulo").toString()
             intent.putExtra("titulo", titulo)
             intent.putExtra("id", id)
-            startActivity(intent)
             startActivity(intent)
 
         }.addOnFailureListener {
