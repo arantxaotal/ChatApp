@@ -30,6 +30,7 @@ class AddChapter : AppCompatActivity() {
     lateinit var name_file : String
     lateinit var path_file : String
     lateinit var document_file : DocumentFile
+    lateinit var titulo : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         database = Firebase.database.reference
@@ -87,6 +88,13 @@ class AddChapter : AppCompatActivity() {
             //GUARDA DATA EN BD DEL CAPITULO
             database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
             Toast.makeText(this, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SeeChapters::class.java)
+            titulo = intent.getStringExtra("titulo").toString()
+            intent.putExtra("titulo", titulo)
+            intent.putExtra("id", id)
+            startActivity(intent)
+            startActivity(intent)
+
         }.addOnFailureListener {
             Toast.makeText(this, "Error al subir el audio", Toast.LENGTH_SHORT).show()
         }

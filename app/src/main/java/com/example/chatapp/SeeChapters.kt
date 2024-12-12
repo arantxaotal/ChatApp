@@ -42,6 +42,7 @@ class SeeChapters : AppCompatActivity() {
         crear_capitulo_btn.setOnClickListener{
             val intent = Intent(this, AddChapter::class.java)
             intent.putExtra("id", id)
+            intent.putExtra("titulo", titulo_libro.text.toString())
             startActivity(intent)
         }
 
