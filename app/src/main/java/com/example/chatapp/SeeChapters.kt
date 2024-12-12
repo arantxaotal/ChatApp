@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
 
 class SeeChapters : AppCompatActivity() {
     private lateinit var crear_capitulo_btn : FloatingActionButton
@@ -85,7 +86,20 @@ class SeeChapters : AppCompatActivity() {
                                 chapter_table_view.removeView(row)
                                 Toast.makeText(this@SeeChapters, "Capítulo eliminado", Toast.LENGTH_SHORT).show()
                             }.addOnFailureListener {
-                                Toast.makeText(this@SeeChapters, "Error al eliminar el capítulo", Toast.LENGTH_SHORT).show()
+                                if (it is StorageException && it.errorCode == StorageException.ERROR_OBJECT_NOT_FOUND)
+                                {
+                                    databaseRef.child(id!!).removeValue().addOnSuccessListener {
+                                        chapter_table_view.removeView(row)
+                                        Toast.makeText(this@SeeChapters, "Capítulo eliminado", Toast.LENGTH_SHORT).show()
+                                    }.addOnFailureListener{
+                                        Toast.makeText(this@SeeChapters, "Error al eliminar el capítulo", Toast.LENGTH_SHORT).show()
+                                    }
+                                }else
+                                {
+                                    Toast.makeText(this@SeeChapters, "Error al eliminar el capítulo", Toast.LENGTH_SHORT).show()
+                                }
+
+
                             }
                         }
 
@@ -94,8 +108,9 @@ class SeeChapters : AppCompatActivity() {
 
                     nombre_capitulo_view.isClickable = true
                     nombre_capitulo_view.setOnClickListener {
-
-
+                        val intent = Intent(this@SeeChapters, PlayChapter::class.java)
+                        intent.putExtra("nombre_capitulo", nombre_capitulo.toString())
+                        intent.putExtra("id", id.toString())
                     }
                     row.addView(nombre_capitulo_view)
                     row.addView(deleteButton)
