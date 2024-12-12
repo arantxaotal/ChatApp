@@ -2,23 +2,18 @@ package com.example.chatapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
 
@@ -59,7 +54,7 @@ class SeeChapters : AppCompatActivity() {
                     val audio_path = ds.child("path").getValue(String::class.java)
                     val book_id = ds.child("book_id").getValue(String::class.java)
                     val id = ds.child("id").getValue(String::class.java)
-                    val nombre_capitulo_view = TextView(this@SeeChapters)
+                    val nombreCapituloView = TextView(this@SeeChapters)
                     val deleteButton = FloatingActionButton(this@SeeChapters)
                     val row = TableRow(this@SeeChapters)
 
@@ -69,10 +64,10 @@ class SeeChapters : AppCompatActivity() {
                     )
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@SeeChapters, R.drawable.baseline_delete_outline_24))
                     row.setPadding(16, 16, 16, 16)
-                    nombre_capitulo_view.text = nombre_capitulo
-                    nombre_capitulo_view.textSize = 20f
-                    nombre_capitulo_view.setPadding(16, 16, 16, 16)
-                    nombre_capitulo_view.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT)
+                    nombreCapituloView.text = nombre_capitulo
+                    nombreCapituloView.textSize = 20f
+                    nombreCapituloView.setPadding(16, 16, 16, 16)
+                    nombreCapituloView.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT)
 
                     deleteButton.setOnClickListener {
                         if (audio_path != null)
@@ -106,13 +101,14 @@ class SeeChapters : AppCompatActivity() {
 
                     }
 
-                    nombre_capitulo_view.isClickable = true
-                    nombre_capitulo_view.setOnClickListener {
+                    nombreCapituloView.isClickable = true
+                    nombreCapituloView.setOnClickListener{
                         val intent = Intent(this@SeeChapters, PlayChapter::class.java)
-                        intent.putExtra("nombre_capitulo", nombre_capitulo.toString())
-                        intent.putExtra("id", id.toString())
+                        intent.putExtra("id", id)
+                        intent.putExtra("titulo", titulo_libro.text.toString())
+                        startActivity(intent)
                     }
-                    row.addView(nombre_capitulo_view)
+                    row.addView(nombreCapituloView)
                     row.addView(deleteButton)
                     chapter_table_view.addView(row)
 
