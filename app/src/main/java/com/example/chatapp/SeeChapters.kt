@@ -105,7 +105,8 @@ class SeeChapters : AppCompatActivity() {
                     nombreCapituloView.setOnClickListener{
                         val intent = Intent(this@SeeChapters, PlayChapter::class.java)
                         intent.putExtra("id", id)
-                        intent.putExtra("titulo", titulo_libro.text.toString())
+                        intent.putExtra("titulo", nombre_capitulo)
+                        intent.putExtra("path", audio_path)
                         startActivity(intent)
                     }
                     row.addView(nombreCapituloView)
