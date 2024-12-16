@@ -31,6 +31,7 @@ class AddChapter : AppCompatActivity() {
     lateinit var path_file : String
     lateinit var document_file : DocumentFile
     lateinit var titulo : String
+    lateinit var orden_capitulo : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         titulo = intent.getStringExtra("titulo").toString()
@@ -78,6 +79,7 @@ class AddChapter : AppCompatActivity() {
         val id =  intent.getStringExtra("id")
         path_view = findViewById(R.id.path)
         nombre_capitulo = findViewById(R.id.namechapter)
+        orden_capitulo = findViewById(R.id.num_cap)
 
         if (nombre_capitulo.text.toString() == "")
         {
@@ -87,10 +89,14 @@ class AddChapter : AppCompatActivity() {
         {
             Toast.makeText(this, "Selecciona un audio", Toast.LENGTH_SHORT).show()
         }
-        if (nombre_capitulo.text.toString() != "" && path_view.text.toString() != "")
+        if (orden_capitulo.text.toString() == "")
+        {
+            Toast.makeText(this, "Orden de capítulo vacío", Toast.LENGTH_SHORT).show()
+        }
+        if (nombre_capitulo.text.toString() != "" && path_view.text.toString() != "" && orden_capitulo.text.toString() != "")
         {
             val uri = document_file.uri
-            val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString())
+            val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString(),orden_capitulo.text.toString().toInt())
             // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
             val uploadTask = file_storage.child("audios/${name_file}").putFile(uri)
             uploadTask.addOnSuccessListener {

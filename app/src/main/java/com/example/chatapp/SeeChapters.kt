@@ -106,6 +106,7 @@ class SeeChapters : AppCompatActivity() {
                         val intent = Intent(this@SeeChapters, PlayChapter::class.java)
                         intent.putExtra("id", id)
                         intent.putExtra("titulo", nombre_capitulo)
+                        intent.putExtra("book_id", book_id)
                         intent.putExtra("path", audio_path)
                         startActivity(intent)
                     }
