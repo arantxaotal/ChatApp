@@ -1,15 +1,22 @@
 package com.example.chatapp
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chatapp.recycleview.item.Chapter
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
@@ -27,11 +34,60 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var titulo_path: String
     private lateinit var audioFileRef: StorageReference
     private lateinit var storageReference: StorageReference
+    private lateinit var previousButtonView: Button
+    private lateinit var nextButtonView: Button
+    private lateinit var book_id: String
+    private lateinit var orden: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialize()
+
+        previousButtonView.setOnClickListener {
+            var databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
+            val query = databaseRef.orderByChild("book_id").equalTo(book_id)
+            val previous: MutableList<Chapter> = mutableListOf()
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (chapterSnapshot in snapshot.children) {
+                        val chapter = chapterSnapshot.getValue(Chapter::class.java)
+                        if (chapter != null) {
+                            // Filter users where id > age
+                            if (chapter.orden < orden.toInt()) {
+                                // Log or handle users that satisfy the condition
+                                previous.add(chapter)
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "Error: ${error.message}")
+                }
+            })
+            if (previous.isEmpty()) {
+                Toast.makeText(this, "No hay capítulos anteriores", Toast.LENGTH_SHORT).show()
+            }else
+            {
+                previous.sortBy { it.orden }
+                val previousChapter = previous.last()
+                val intent = Intent(this@PlayChapter, PlayChapter::class.java)
+                intent.putExtra("id", previousChapter.id)
+                intent.putExtra("titulo", previousChapter.nombre_capitulo)
+                intent.putExtra("book_id", previousChapter.book_id)
+                intent.putExtra("path", previousChapter.path)
+                intent.putExtra("orden", previousChapter.orden)
+                startActivity(intent)
+            }
+
+
+
+        }
+
+        nextButtonView.setOnClickListener{
+
+        }
 
         // Obtener la URL del archivo de audio
         audioFileRef.downloadUrl.addOnSuccessListener { uri ->
@@ -67,14 +123,6 @@ class PlayChapter : AppCompatActivity() {
             }
 
 
-            //BOTON STOP
-            stopButtonView.setOnClickListener {
-                mediaPlayer?.stop()
-                mediaPlayer?.reset() // Resetear el MediaPlayer
-                mediaPlayer?.setDataSource(audioUrl) // Volver a configurar la fuente
-                mediaPlayer?.prepareAsync() // Preparar nuevamente
-                Toast.makeText(this, "Audio detenido", Toast.LENGTH_SHORT).show()
-            }
         }.addOnFailureListener { exception ->
             // Si falla al obtener la URL
             Toast.makeText(this, "Error al obtener el audio: ${exception.message}", Toast.LENGTH_LONG).show()
@@ -102,12 +150,12 @@ class PlayChapter : AppCompatActivity() {
         setContentView(R.layout.activity_play_chapter)
         titulo_cap = findViewById(R.id.titulo_cap)
         titulo_cap.text = intent.getStringExtra("titulo")
+        book_id = intent.getStringExtra("book_id").toString()
         audioPath = findViewById(R.id.audioPath)
         seekBarView = findViewById(R.id.seekBar)
         seekBarView.max = 100
         seekBarView.progress = 0
         playButtonView = findViewById(R.id.playButton)
-        stopButtonView = findViewById<Button>(R.id.stopButton)
         path = intent.getStringExtra("path").toString()
         titulo_path = intent.getStringExtra("path").toString().split("audios/")[1]
         audioPath.text = titulo_path
@@ -115,6 +163,12 @@ class PlayChapter : AppCompatActivity() {
         storageReference = FirebaseStorage.getInstance().reference
         audioFileRef = storageReference.child("${path}")
         playButtonView.setBackgroundResource(R.drawable.baseline_play_circle_24)// Ruta del archivo en Firebase Storage
+        previousButtonView = findViewById(R.id.previousButton)
+        nextButtonView = findViewById(R.id.nextButton)
+        previousButtonView.setBackgroundResource(R.drawable.baseline_skip_previous_24)
+        nextButtonView.setBackgroundResource(R.drawable.baseline_skip_next_24)
+        orden = intent.getStringExtra("orden").toString()
+
     }
 
 

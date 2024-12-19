@@ -54,6 +54,7 @@ class SeeChapters : AppCompatActivity() {
                     val audio_path = ds.child("path").getValue(String::class.java)
                     val book_id = ds.child("book_id").getValue(String::class.java)
                     val id = ds.child("id").getValue(String::class.java)
+                    val orden = ds.child("orden").getValue(Long::class.java)
                     val nombreCapituloView = TextView(this@SeeChapters)
                     val deleteButton = FloatingActionButton(this@SeeChapters)
                     val row = TableRow(this@SeeChapters)
@@ -108,6 +109,7 @@ class SeeChapters : AppCompatActivity() {
                         intent.putExtra("titulo", nombre_capitulo)
                         intent.putExtra("book_id", book_id)
                         intent.putExtra("path", audio_path)
+                        intent.putExtra("orden", orden)
                         startActivity(intent)
                     }
                     row.addView(nombreCapituloView)

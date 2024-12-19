@@ -55,13 +55,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/previousButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="#55673AB7"
                 android:gravity="center"
-                app:icon="@android:drawable/ic_media_previous"
                 app:iconGravity="textEnd" />
 
             <Button
@@ -74,28 +73,17 @@
                 app:iconGravity="textEnd" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/nextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="#55673AB7"
                 android:gravity="center"
-                app:icon="@android:drawable/ic_media_next"
                 app:iconGravity="textEnd" />
 
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/stopButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#29332C3F"
-            android:gravity="center"
-            app:icon="@drawable/baseline_stop_24"
-            app:iconGravity="textEnd"
-            app:iconTint="#FFFFFF" />
     </LinearLayout>
 
 </RelativeLayout>
