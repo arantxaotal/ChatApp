@@ -38,6 +38,11 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var nextButtonView: Button
     private lateinit var book_id: String
     private lateinit var orden: String
+    private lateinit var previous: MutableList<Chapter>
+    private lateinit var next: MutableList<Chapter>
+    private lateinit var previousChapter: Chapter
+    private lateinit var nextChapter: Chapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,33 +50,10 @@ class PlayChapter : AppCompatActivity() {
         initialize()
 
         previousButtonView.setOnClickListener {
-            var databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
-            val query = databaseRef.orderByChild("book_id").equalTo(book_id)
-            val previous: MutableList<Chapter> = mutableListOf()
-            query.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (chapterSnapshot in snapshot.children) {
-                        val chapter = chapterSnapshot.getValue(Chapter::class.java)
-                        if (chapter != null) {
-                            // Filter users where id > age
-                            if (chapter.orden < orden.toInt()) {
-                                // Log or handle users that satisfy the condition
-                                previous.add(chapter)
-                            }
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("Firebase", "Error: ${error.message}")
-                }
-            })
             if (previous.isEmpty()) {
                 Toast.makeText(this, "No hay capítulos anteriores", Toast.LENGTH_SHORT).show()
             }else
             {
-                previous.sortBy { it.orden }
-                val previousChapter = previous.last()
                 val intent = Intent(this@PlayChapter, PlayChapter::class.java)
                 intent.putExtra("id", previousChapter.id)
                 intent.putExtra("titulo", previousChapter.nombre_capitulo)
@@ -86,6 +68,18 @@ class PlayChapter : AppCompatActivity() {
         }
 
         nextButtonView.setOnClickListener{
+            if (next.isEmpty()) {
+                Toast.makeText(this, "No hay capítulos posteriores", Toast.LENGTH_SHORT).show()
+            }else
+            {
+                val intent = Intent(this@PlayChapter, PlayChapter::class.java)
+                intent.putExtra("id", nextChapter.id)
+                intent.putExtra("titulo", nextChapter.nombre_capitulo)
+                intent.putExtra("book_id", nextChapter.book_id)
+                intent.putExtra("path", nextChapter.path)
+                intent.putExtra("orden", nextChapter.orden)
+                startActivity(intent)
+            }
 
         }
 
@@ -168,6 +162,63 @@ class PlayChapter : AppCompatActivity() {
         previousButtonView.setBackgroundResource(R.drawable.baseline_skip_previous_24)
         nextButtonView.setBackgroundResource(R.drawable.baseline_skip_next_24)
         orden = intent.getStringExtra("orden").toString()
+        var databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
+        val query = databaseRef.orderByChild("book_id").equalTo(book_id)
+        previous = mutableListOf()
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (chapterSnapshot in snapshot.children) {
+                    val chapter = chapterSnapshot.getValue(Chapter::class.java)
+                    if (chapter != null) {
+                        // Filter users where id > age
+                        if (chapter.orden < orden.toInt()) {
+                            // Log or handle users that satisfy the condition
+                            previous.add(chapter)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error: ${error.message}")
+            }
+        })
+        if (previous.isEmpty()) {
+            previousButtonView.isEnabled = false
+            previousButtonView.isClickable = false
+
+        }else
+        {
+            previous.sortBy { it.orden }
+            previousChapter = previous.last()
+        }
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (chapterSnapshot in snapshot.children) {
+                    val chapter = chapterSnapshot.getValue(Chapter::class.java)
+                    if (chapter != null) {
+                        // Filter users where id > age
+                        if (chapter.orden > orden.toInt()) {
+                            // Log or handle users that satisfy the condition
+                            next.add(chapter)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error: ${error.message}")
+            }
+        })
+        if (next.isEmpty()) {
+            nextButtonView.isEnabled = false
+            nextButtonView.isClickable = false
+        }else
+        {
+            next.sortBy { it.orden }
+            nextChapter = next.first()
+        }
 
     }
 
