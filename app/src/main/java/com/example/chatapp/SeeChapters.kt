@@ -2,6 +2,7 @@ package com.example.chatapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -59,16 +60,7 @@ class SeeChapters : AppCompatActivity() {
                     val deleteButton = FloatingActionButton(this@SeeChapters)
                     val row = TableRow(this@SeeChapters)
 
-                    row.layoutParams = TableLayout.LayoutParams(
-                        TableLayout.LayoutParams.MATCH_PARENT,
-                        TableLayout.LayoutParams.WRAP_CONTENT
-                    )
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@SeeChapters, R.drawable.baseline_delete_outline_24))
-                    row.setPadding(16, 16, 16, 16)
-                    nombreCapituloView.text = nombre_capitulo
-                    nombreCapituloView.textSize = 20f
-                    nombreCapituloView.setPadding(16, 16, 16, 16)
-                    nombreCapituloView.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT)
 
                     deleteButton.setOnClickListener {
                         if (audio_path != null)
@@ -101,6 +93,13 @@ class SeeChapters : AppCompatActivity() {
 
 
                     }
+                    // Handling long text
+                    nombreCapituloView.text = nombre_capitulo
+                    nombreCapituloView.ellipsize = TextUtils.TruncateAt.END  // Truncate if text is too long
+                    nombreCapituloView.maxLines = 1
+                    nombreCapituloView.textSize = 20f
+                    nombreCapituloView.setPadding(10, 10, 10, 10)
+                    nombreCapituloView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
 
                     nombreCapituloView.isClickable = true
                     nombreCapituloView.setOnClickListener{
@@ -115,6 +114,8 @@ class SeeChapters : AppCompatActivity() {
                     }
                     row.addView(nombreCapituloView)
                     row.addView(deleteButton)
+
+
                     chapter_table_view.addView(row)
 
                 }
@@ -127,5 +128,6 @@ class SeeChapters : AppCompatActivity() {
 
 
     }
+
 }
 

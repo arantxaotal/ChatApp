@@ -2,6 +2,7 @@ package com.example.chatapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -63,11 +64,13 @@ class MainActivity : AppCompatActivity() {
                         TableLayout.LayoutParams.WRAP_CONTENT
                     )
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_delete_outline_24))
-                    row.setPadding(16, 16, 16, 16)
-                    tituloView.text = titulo
+                    tituloView.ellipsize = TextUtils.TruncateAt.END  // Truncate if text is too long
+                    tituloView.maxLines = 1
                     tituloView.textSize = 20f
-                    tituloView.setPadding(16, 16, 16, 16)
-                    tituloView.layoutParams = TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT)
+                    tituloView.text = titulo
+                    tituloView.setPadding(10, 10, 10, 10)
+                    tituloView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
+
 
                     deleteButton.setOnClickListener {
                         databaseRef.child(id!!).removeValue()
