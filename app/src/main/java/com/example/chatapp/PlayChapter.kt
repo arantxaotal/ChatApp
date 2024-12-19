@@ -29,10 +29,7 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var audioPath : TextView
     private lateinit var playButtonView: Button
     private lateinit var seekBarView: SeekBar
-    private lateinit var mediaPlayer: MediaPlayer
     private lateinit var path: String
-    private var isPlaying: Boolean = false
-    private val handler = Handler()
     private lateinit var titulo_path: String
     private lateinit var audioFileRef: StorageReference
     private lateinit var storageReference: StorageReference
@@ -46,6 +43,8 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var previousChapter: Chapter
     private lateinit var nextChapter: Chapter
     private lateinit var returnButtonView: ImageButton
+    private lateinit var videoView: VideoView
+    private val handler = Handler()
 
 
 
@@ -54,9 +53,8 @@ class PlayChapter : AppCompatActivity() {
         initialize()
 
         returnButtonView.setOnClickListener {
-            if (mediaPlayer?.isPlaying == true) {
-                mediaPlayer?.stop()
-                mediaPlayer?.prepare() // Reset MediaPlayer to play again if needed
+            if (videoView?.isPlaying == true) {
+                videoView?.stopPlayback()
             }
             val intent = Intent(this@PlayChapter, SeeChapters::class.java)
             intent.putExtra("titulo", titulo_libro)
@@ -64,8 +62,10 @@ class PlayChapter : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         // Find the VideoView
-        val videoView: VideoView = findViewById(R.id.videoView)
+        videoView= findViewById(R.id.videoView)
+
 
         // Set up the MediaController
         val mediaController = MediaController(this)
@@ -73,14 +73,14 @@ class PlayChapter : AppCompatActivity() {
         videoView.setMediaController(mediaController)
 
 
+
         previousButtonView.setOnClickListener {
             if (previous.isEmpty()) {
                 Toast.makeText(this, "No hay capítulos anteriores", Toast.LENGTH_SHORT).show()
             }else
             {
-                if (mediaPlayer?.isPlaying == true) {
-                    mediaPlayer?.stop()
-                    mediaPlayer?.prepare() // Reset MediaPlayer to play again if needed
+                if (videoView?.isPlaying == true) {
+                    videoView?.stopPlayback()
                 }
                 val intent = Intent(this@PlayChapter, PlayChapter::class.java)
                 intent.putExtra("id", previousChapter.id)
@@ -101,9 +101,8 @@ class PlayChapter : AppCompatActivity() {
                 Toast.makeText(this, "No hay capítulos posteriores", Toast.LENGTH_SHORT).show()
             }else
             {
-                if (mediaPlayer?.isPlaying == true) {
-                    mediaPlayer?.stop()
-                    mediaPlayer?.prepare() // Reset MediaPlayer to play again if needed
+                if (videoView?.isPlaying == true) {
+                    videoView?.stopPlayback()
                 }
                 val intent = Intent(this@PlayChapter, PlayChapter::class.java)
                 intent.putExtra("id", nextChapter.id)
@@ -121,43 +120,53 @@ class PlayChapter : AppCompatActivity() {
         audioFileRef.downloadUrl.addOnSuccessListener { uri ->
             // Si la URL es obtenida correctamente
             val audioUrl = uri.toString()
-            // Set up the MediaController
-            val mediaController = MediaController(this)
-            mediaController.setAnchorView(videoView)
-            videoView.setMediaController(mediaController)
 
             // Set the video URI to the VideoView
             videoView.setVideoURI(uri)
 
 
-
-            // Configurar el MediaPlayer con la URL del audio
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(audioUrl)
-                prepareAsync() // Preparar de forma asíncrona
+            // Set max SeekBar value to video duration
+            videoView.setOnPreparedListener {
+                seekBarView.max = videoView.duration
             }
 
             // Configuración de la barra de progreso
-            mediaPlayer?.setOnPreparedListener {
-                seekBarView.max = mediaPlayer!!.duration
-                startUpdatingSeekBar()
+            videoView?.setOnPreparedListener {
+                seekBarView.max = videoView!!.duration
             }
+
+            videoView.setOnCompletionListener {
+                playButtonView.setBackgroundResource(R.drawable.baseline_play_circle_24)
+            }
+
+
 
             //BOTON PLAY
             playButtonView.setOnClickListener {
-                mediaPlayer.start()
-                if (!isPlaying) {
-                    mediaPlayer?.start()
-                    isPlaying = true
+                if (!videoView.isPlaying) {
+                    updateSeekBar()
+                    videoView?.start()
                     playButtonView.setBackgroundResource(R.drawable.baseline_pause_circle_24)
                     Toast.makeText(this, "Reproduciendo audio", Toast.LENGTH_SHORT).show()
                 } else {
-                    mediaPlayer?.pause()
-                    isPlaying = false
+                    updateSeekBar()
+                    videoView?.pause()
                     playButtonView.setBackgroundResource(R.drawable.baseline_play_circle_24)
                     Toast.makeText(this, "Audio pausado", Toast.LENGTH_SHORT).show()
                 }
             }
+            // SeekBar change listener
+            seekBarView.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    if (fromUser) {
+                        videoView.seekTo(progress)
+                    }
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            })
 
 
         }.addOnFailureListener { exception ->
@@ -168,20 +177,17 @@ class PlayChapter : AppCompatActivity() {
 
 
     }
-    // Función para actualizar la barra de progreso mientras se reproduce el audio
-    private fun startUpdatingSeekBar() {
+    private fun updateSeekBar() {
         handler.postDelayed(object : Runnable {
             override fun run() {
-                seekBarView.progress = mediaPlayer!!.currentPosition
-                if (mediaPlayer!!.isPlaying) {
-                    handler.postDelayed(this, 1000) // Actualizar cada segundo
-                }
+                seekBarView.progress = videoView.currentPosition
+                handler.postDelayed(this, 1000) // Update every second
             }
-        }, 1000)
+        }, 0)
     }
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer?.release() // Libera los recursos cuando la actividad se destruye
+        videoView.stopPlayback()
     }
     private fun initialize() {
         setContentView(R.layout.activity_play_chapter)
