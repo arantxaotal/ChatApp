@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
@@ -27,7 +28,6 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var playButtonView: Button
     private lateinit var seekBarView: SeekBar
     private lateinit var mediaPlayer: MediaPlayer
-    private lateinit var stopButtonView: Button
     private lateinit var path: String
     private var isPlaying: Boolean = false
     private val handler = Handler()
@@ -37,17 +37,26 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var previousButtonView: Button
     private lateinit var nextButtonView: Button
     private lateinit var book_id: String
+    private lateinit var titulo_libro: String
     private lateinit var orden: String
     private lateinit var previous: MutableList<Chapter>
     private lateinit var next: MutableList<Chapter>
     private lateinit var previousChapter: Chapter
     private lateinit var nextChapter: Chapter
+    private lateinit var returnButtonView: ImageButton
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialize()
+
+        returnButtonView.setOnClickListener {
+            val intent = Intent(this@PlayChapter, SeeChapters::class.java)
+            intent.putExtra("titulo", titulo_libro)
+            intent.putExtra("id", book_id)
+            startActivity(intent)
+        }
 
         previousButtonView.setOnClickListener {
             if (previous.isEmpty()) {
@@ -58,6 +67,7 @@ class PlayChapter : AppCompatActivity() {
                 intent.putExtra("id", previousChapter.id)
                 intent.putExtra("titulo", previousChapter.nombre_capitulo)
                 intent.putExtra("book_id", previousChapter.book_id)
+                intent.putExtra("titulo_libro", titulo_libro)
                 intent.putExtra("path", previousChapter.path)
                 intent.putExtra("orden", previousChapter.orden.toString())
                 startActivity(intent)
@@ -75,6 +85,7 @@ class PlayChapter : AppCompatActivity() {
                 val intent = Intent(this@PlayChapter, PlayChapter::class.java)
                 intent.putExtra("id", nextChapter.id)
                 intent.putExtra("titulo", nextChapter.nombre_capitulo)
+                intent.putExtra("titulo_libro", titulo_libro)
                 intent.putExtra("book_id", nextChapter.book_id)
                 intent.putExtra("path", nextChapter.path)
                 intent.putExtra("orden", nextChapter.orden.toString())
@@ -142,9 +153,11 @@ class PlayChapter : AppCompatActivity() {
     }
     private fun initialize() {
         setContentView(R.layout.activity_play_chapter)
+        returnButtonView = findViewById(R.id.btnReturn)
         titulo_cap = findViewById(R.id.titulo_cap)
         titulo_cap.text = intent.getStringExtra("titulo")
         book_id = intent.getStringExtra("book_id").toString()
+        titulo_libro = intent.getStringExtra("titulo_libro").toString()
         audioPath = findViewById(R.id.audioPath)
         seekBarView = findViewById(R.id.seekBar)
         seekBarView.max = 100
