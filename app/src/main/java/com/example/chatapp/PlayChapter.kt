@@ -178,21 +178,22 @@ class PlayChapter : AppCompatActivity() {
                         }
                     }
                 }
+                if (previous.isEmpty()) {
+                    previousButtonView.isEnabled = false
+                    previousButtonView.isClickable = false
+
+                }else
+                {
+                    previous.sortBy { it.orden }
+                    previousChapter = previous.last()
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error: ${error.message}")
             }
         })
-        if (previous.isEmpty()) {
-            previousButtonView.isEnabled = false
-            previousButtonView.isClickable = false
 
-        }else
-        {
-            previous.sortBy { it.orden }
-            previousChapter = previous.last()
-        }
 
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -206,20 +207,21 @@ class PlayChapter : AppCompatActivity() {
                         }
                     }
                 }
+                if (next.isEmpty()) {
+                    nextButtonView.isEnabled = false
+                    nextButtonView.isClickable = false
+                }else
+                {
+                    next.sortBy { it.orden }
+                    nextChapter = next.first()
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error: ${error.message}")
             }
         })
-        if (next.isEmpty()) {
-            nextButtonView.isEnabled = false
-            nextButtonView.isClickable = false
-        }else
-        {
-            next.sortBy { it.orden }
-            nextChapter = next.first()
-        }
+
 
     }
 
