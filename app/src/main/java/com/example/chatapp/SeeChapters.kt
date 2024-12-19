@@ -109,7 +109,7 @@ class SeeChapters : AppCompatActivity() {
                         intent.putExtra("titulo", nombre_capitulo)
                         intent.putExtra("book_id", book_id)
                         intent.putExtra("path", audio_path)
-                        intent.putExtra("orden", orden)
+                        intent.putExtra("orden", orden.toString())
                         startActivity(intent)
                     }
                     row.addView(nombreCapituloView)

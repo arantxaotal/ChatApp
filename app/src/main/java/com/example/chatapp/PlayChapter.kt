@@ -165,6 +165,7 @@ class PlayChapter : AppCompatActivity() {
         var databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
         val query = databaseRef.orderByChild("book_id").equalTo(book_id)
         previous = mutableListOf()
+        next = mutableListOf()
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (chapterSnapshot in snapshot.children) {
