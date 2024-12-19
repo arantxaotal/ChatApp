@@ -59,7 +59,7 @@ class PlayChapter : AppCompatActivity() {
                 intent.putExtra("titulo", previousChapter.nombre_capitulo)
                 intent.putExtra("book_id", previousChapter.book_id)
                 intent.putExtra("path", previousChapter.path)
-                intent.putExtra("orden", previousChapter.orden)
+                intent.putExtra("orden", previousChapter.orden.toString())
                 startActivity(intent)
             }
 
@@ -77,7 +77,7 @@ class PlayChapter : AppCompatActivity() {
                 intent.putExtra("titulo", nextChapter.nombre_capitulo)
                 intent.putExtra("book_id", nextChapter.book_id)
                 intent.putExtra("path", nextChapter.path)
-                intent.putExtra("orden", nextChapter.orden)
+                intent.putExtra("orden", nextChapter.orden.toString())
                 startActivity(intent)
             }
 
@@ -161,7 +161,10 @@ class PlayChapter : AppCompatActivity() {
         nextButtonView = findViewById(R.id.nextButton)
         previousButtonView.setBackgroundResource(R.drawable.baseline_skip_previous_24)
         nextButtonView.setBackgroundResource(R.drawable.baseline_skip_next_24)
-        orden = intent.getStringExtra("orden").toString()
+        if (intent.getStringExtra("orden") != null)
+        {
+            orden = intent.getStringExtra("orden").toString()
+        }
         var databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
         val query = databaseRef.orderByChild("book_id").equalTo(book_id)
         previous = mutableListOf()
@@ -170,7 +173,7 @@ class PlayChapter : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (chapterSnapshot in snapshot.children) {
                     val chapter = chapterSnapshot.getValue(Chapter::class.java)
-                    if (chapter != null) {
+                    if (chapter != null && orden != null && orden.isNotEmpty()) {
                         // Filter users where id > age
                         if (chapter.orden < orden.toInt()) {
                             // Log or handle users that satisfy the condition
@@ -199,7 +202,7 @@ class PlayChapter : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (chapterSnapshot in snapshot.children) {
                     val chapter = chapterSnapshot.getValue(Chapter::class.java)
-                    if (chapter != null) {
+                    if (chapter != null && orden != null && orden.isNotEmpty()) {
                         // Filter users where id > age
                         if (chapter.orden > orden.toInt()) {
                             // Log or handle users that satisfy the condition
