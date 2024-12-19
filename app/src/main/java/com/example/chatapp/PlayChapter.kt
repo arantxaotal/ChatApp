@@ -8,10 +8,12 @@ import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.MediaController
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.chatapp.recycleview.item.Chapter
 import com.google.firebase.database.DataSnapshot
@@ -52,17 +54,34 @@ class PlayChapter : AppCompatActivity() {
         initialize()
 
         returnButtonView.setOnClickListener {
+            if (mediaPlayer?.isPlaying == true) {
+                mediaPlayer?.stop()
+                mediaPlayer?.prepare() // Reset MediaPlayer to play again if needed
+            }
             val intent = Intent(this@PlayChapter, SeeChapters::class.java)
             intent.putExtra("titulo", titulo_libro)
             intent.putExtra("id", book_id)
             startActivity(intent)
         }
 
+        // Find the VideoView
+        val videoView: VideoView = findViewById(R.id.videoView)
+
+        // Set up the MediaController
+        val mediaController = MediaController(this)
+        mediaController.setAnchorView(videoView)
+        videoView.setMediaController(mediaController)
+
+
         previousButtonView.setOnClickListener {
             if (previous.isEmpty()) {
                 Toast.makeText(this, "No hay capítulos anteriores", Toast.LENGTH_SHORT).show()
             }else
             {
+                if (mediaPlayer?.isPlaying == true) {
+                    mediaPlayer?.stop()
+                    mediaPlayer?.prepare() // Reset MediaPlayer to play again if needed
+                }
                 val intent = Intent(this@PlayChapter, PlayChapter::class.java)
                 intent.putExtra("id", previousChapter.id)
                 intent.putExtra("titulo", previousChapter.nombre_capitulo)
@@ -82,6 +101,10 @@ class PlayChapter : AppCompatActivity() {
                 Toast.makeText(this, "No hay capítulos posteriores", Toast.LENGTH_SHORT).show()
             }else
             {
+                if (mediaPlayer?.isPlaying == true) {
+                    mediaPlayer?.stop()
+                    mediaPlayer?.prepare() // Reset MediaPlayer to play again if needed
+                }
                 val intent = Intent(this@PlayChapter, PlayChapter::class.java)
                 intent.putExtra("id", nextChapter.id)
                 intent.putExtra("titulo", nextChapter.nombre_capitulo)
@@ -98,6 +121,15 @@ class PlayChapter : AppCompatActivity() {
         audioFileRef.downloadUrl.addOnSuccessListener { uri ->
             // Si la URL es obtenida correctamente
             val audioUrl = uri.toString()
+            // Set up the MediaController
+            val mediaController = MediaController(this)
+            mediaController.setAnchorView(videoView)
+            videoView.setMediaController(mediaController)
+
+            // Set the video URI to the VideoView
+            videoView.setVideoURI(uri)
+
+
 
             // Configurar el MediaPlayer con la URL del audio
             mediaPlayer = MediaPlayer().apply {
