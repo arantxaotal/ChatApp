@@ -1,6 +1,8 @@
 package com.example.chatapp
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
+import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -67,11 +69,6 @@ class PlayChapter : AppCompatActivity() {
         videoView= findViewById(R.id.videoView)
 
 
-        // Set up the MediaController
-        val mediaController = MediaController(this)
-        mediaController.setAnchorView(videoView)
-        videoView.setMediaController(mediaController)
-
 
 
         previousButtonView.setOnClickListener {
@@ -118,11 +115,11 @@ class PlayChapter : AppCompatActivity() {
 
         // Obtener la URL del archivo de audio
         audioFileRef.downloadUrl.addOnSuccessListener { uri ->
-            // Si la URL es obtenida correctamente
-            val audioUrl = uri.toString()
 
             // Set the video URI to the VideoView
             videoView.setVideoURI(uri)
+            videoView.seekTo( 1 )
+
 
 
             // Set max SeekBar value to video duration
@@ -189,6 +186,7 @@ class PlayChapter : AppCompatActivity() {
         super.onDestroy()
         videoView.stopPlayback()
     }
+
     private fun initialize() {
         setContentView(R.layout.activity_play_chapter)
         returnButtonView = findViewById(R.id.btnReturn)
