@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchTable() {
         databaseRef = FirebaseDatabase.getInstance().getReference("Books/")
+        val query = databaseRef.orderByChild("titulo")
         book_table_view = findViewById(R.id.book_table)
         val eventListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -73,6 +75,18 @@ class MainActivity : AppCompatActivity() {
 
 
                     deleteButton.setOnClickListener {
+                        val chapters = FirebaseDatabase.getInstance().getReference("Chapters/").orderByChild("book_id").equalTo(id).addListenerForSingleValueEvent(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    for (data in snapshot.children) {
+                                        val storageReference = FirebaseStorage.getInstance().reference
+                                        val audioFileRef = storageReference.child("${data.child("path").value}")
+                                        audioFileRef.delete()
+                                        data.ref.removeValue()
+                                    }
+                                }override fun onCancelled(error: DatabaseError) {
+                                    println("Query cancelled: ${error.message}")
+                                }
+                            })
                         databaseRef.child(id!!).removeValue()
                         book_table_view.removeView(row)
                         Toast.makeText(this@MainActivity, "Libro eliminado", Toast.LENGTH_SHORT).show()
@@ -99,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {
             }
         }
-        databaseRef.addListenerForSingleValueEvent(eventListener)
+        query.addListenerForSingleValueEvent(eventListener)
 
 
     }

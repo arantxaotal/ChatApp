@@ -11,6 +11,7 @@ import androidx.documentfile.provider.DocumentFile
 import com.example.chatapp.recycleview.item.Chapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -96,7 +97,8 @@ class AddChapter : AppCompatActivity() {
         if (nombre_capitulo.text.toString() != "" && path_view.text.toString() != "" && orden_capitulo.text.toString() != "")
         {
             val uri = document_file.uri
-            val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString(),orden_capitulo.text.toString().toInt())
+            val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString(),orden_capitulo.text.toString().toInt(), usuario_uuid)
             // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
             val uploadTask = file_storage.child("audios/${name_file}").putFile(uri)
             uploadTask.addOnSuccessListener {

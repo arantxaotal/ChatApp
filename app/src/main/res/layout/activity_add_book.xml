@@ -98,12 +98,25 @@
                 android:inputType="textMultiLine" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/private_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Libro privado"
+            android:button="@drawable/baseline_lock_24"
+            android:padding="8dp"
+            android:layout_margin="8dp" />
+        <!-- Icon for lock/unlock -->
+
+        <!-- Material Checkbox -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             style="@style/Widget.Design.TextInputLayout"
             android:textColorHint="@color/grey"
             />
+
+
         <Button
             android:backgroundTint="@color/purple"
             android:layout_marginTop="20dp"
