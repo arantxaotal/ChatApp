@@ -13,6 +13,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -74,22 +75,38 @@ class MainActivity : AppCompatActivity() {
                     tituloView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
 
 
-                    deleteButton.setOnClickListener {
-                        val chapters = FirebaseDatabase.getInstance().getReference("Chapters/").orderByChild("book_id").equalTo(id).addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    for (data in snapshot.children) {
-                                        val storageReference = FirebaseStorage.getInstance().reference
-                                        val audioFileRef = storageReference.child("${data.child("path").value}")
-                                        audioFileRef.delete()
-                                        data.ref.removeValue()
+                    deleteButton.setOnClickListener() {
+
+                        // Build the AlertDialog
+                        val builder = AlertDialog.Builder(this@MainActivity)
+                        builder.setTitle("Confirmar eliminación")
+                            .setMessage("¿Deseas eliminar este libro?")
+                            .setPositiveButton("Sí") { dialog, which ->
+                                // User confirms deletion
+                                val chapters = FirebaseDatabase.getInstance().getReference("Chapters/").orderByChild("book_id").equalTo(id).addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        for (data in snapshot.children) {
+                                            val storageReference = FirebaseStorage.getInstance().reference
+                                            val audioFileRef = storageReference.child("${data.child("path").value}")
+                                            audioFileRef.delete()
+                                            data.ref.removeValue()
+                                        }
+                                    }override fun onCancelled(error: DatabaseError) {
+                                        println("Query cancelled: ${error.message}")
                                     }
-                                }override fun onCancelled(error: DatabaseError) {
-                                    println("Query cancelled: ${error.message}")
-                                }
-                            })
-                        databaseRef.child(id!!).removeValue()
-                        book_table_view.removeView(row)
-                        Toast.makeText(this@MainActivity, "Libro eliminado", Toast.LENGTH_SHORT).show()
+                                })
+                                databaseRef.child(id!!).removeValue()
+                                book_table_view.removeView(row)
+                                Toast.makeText(this@MainActivity, "Libro eliminado", Toast.LENGTH_SHORT).show()
+
+                            }
+                            .setNegativeButton("No") { dialog, which ->
+                                // User cancels deletion
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+
 
                     }
 

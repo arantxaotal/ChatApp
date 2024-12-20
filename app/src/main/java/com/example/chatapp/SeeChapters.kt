@@ -7,6 +7,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -63,33 +64,47 @@ class SeeChapters : AppCompatActivity() {
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@SeeChapters, R.drawable.baseline_delete_outline_24))
 
                     deleteButton.setOnClickListener {
-                        if (audio_path != null)
-                        {
-                            val storageRef = storage.reference
-
-                            val desertRef = storageRef.child(audio_path)
-                            // Delete the file
-                            desertRef.delete().addOnSuccessListener {
-                                databaseRef.child(id!!).removeValue()
-                                chapter_table_view.removeView(row)
-                                Toast.makeText(this@SeeChapters, "Capítulo eliminado", Toast.LENGTH_SHORT).show()
-                            }.addOnFailureListener {
-                                if (it is StorageException && it.errorCode == StorageException.ERROR_OBJECT_NOT_FOUND)
+                        // Build the AlertDialog
+                        val builder = AlertDialog.Builder(this@SeeChapters)
+                        builder.setTitle("Confirmar eliminación")
+                            .setMessage("¿Deseas eliminar este capítulo?")
+                            .setPositiveButton("Sí") { dialog, which ->
+                                if (audio_path != null)
                                 {
-                                    databaseRef.child(id!!).removeValue().addOnSuccessListener {
+                                    val storageRef = storage.reference
+
+                                    val desertRef = storageRef.child(audio_path)
+                                    // Delete the file
+                                    desertRef.delete().addOnSuccessListener {
+                                        databaseRef.child(id!!).removeValue()
                                         chapter_table_view.removeView(row)
                                         Toast.makeText(this@SeeChapters, "Capítulo eliminado", Toast.LENGTH_SHORT).show()
-                                    }.addOnFailureListener{
-                                        Toast.makeText(this@SeeChapters, "Error al eliminar el capítulo", Toast.LENGTH_SHORT).show()
+                                    }.addOnFailureListener {
+                                        if (it is StorageException && it.errorCode == StorageException.ERROR_OBJECT_NOT_FOUND)
+                                        {
+                                            databaseRef.child(id!!).removeValue().addOnSuccessListener {
+                                                chapter_table_view.removeView(row)
+                                                Toast.makeText(this@SeeChapters, "Capítulo eliminado", Toast.LENGTH_SHORT).show()
+                                            }.addOnFailureListener{
+                                                Toast.makeText(this@SeeChapters, "Error al eliminar el capítulo", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }else
+                                        {
+                                            Toast.makeText(this@SeeChapters, "Error al eliminar el capítulo", Toast.LENGTH_SHORT).show()
+                                        }
+
+
                                     }
-                                }else
-                                {
-                                    Toast.makeText(this@SeeChapters, "Error al eliminar el capítulo", Toast.LENGTH_SHORT).show()
                                 }
 
-
                             }
-                        }
+                            .setNegativeButton("No") { dialog, which ->
+                                // User cancels deletion
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+
 
 
                     }
