@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         databaseRef = FirebaseDatabase.getInstance().getReference("Books/")
         val query = databaseRef.orderByChild("titulo")
         book_table_view = findViewById(R.id.book_table)
+        val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val eventListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (ds in dataSnapshot.children) {
@@ -73,6 +74,10 @@ class MainActivity : AppCompatActivity() {
                     tituloView.text = titulo
                     tituloView.setPadding(10, 10, 10, 10)
                     tituloView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
+                    if(usuario_uuid != ds.child("usuario_creador").getValue(String::class.java))
+                    {
+                        deleteButton.isEnabled = false
+                    }
 
 
                     deleteButton.setOnClickListener() {

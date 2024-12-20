@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -46,6 +47,7 @@ class SeeChapters : AppCompatActivity() {
 
     }
     private fun fetchTable() {
+        val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
         val query = databaseRef.orderByChild("book_id").equalTo(id_libro)
         chapter_table_view = findViewById(R.id.chapter_table)
@@ -60,6 +62,10 @@ class SeeChapters : AppCompatActivity() {
                     val nombreCapituloView = TextView(this@SeeChapters)
                     val deleteButton = FloatingActionButton(this@SeeChapters)
                     val row = TableRow(this@SeeChapters)
+                    if(usuario_uuid != ds.child("usuario_creador").getValue(String::class.java))
+                    {
+                        deleteButton.isEnabled = false
+                    }
 
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@SeeChapters, R.drawable.baseline_delete_outline_24))
 
