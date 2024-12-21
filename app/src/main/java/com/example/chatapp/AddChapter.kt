@@ -115,6 +115,8 @@ class AddChapter : AppCompatActivity() {
                                 val intent = Intent(this@AddChapter, SeeChapters::class.java)
                                 intent.putExtra("titulo", titulo)
                                 intent.putExtra("id", id)
+                                intent.putExtra("autor", intent.getStringExtra("autor"))
+                                intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
                                 startActivity(intent)
                             }
                         }

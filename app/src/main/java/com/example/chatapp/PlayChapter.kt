@@ -61,6 +61,8 @@ class PlayChapter : AppCompatActivity() {
             val intent = Intent(this@PlayChapter, SeeChapters::class.java)
             intent.putExtra("titulo", titulo_libro)
             intent.putExtra("id", book_id)
+            intent.putExtra("autor", intent.getStringExtra("autor"))
+            intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
             startActivity(intent)
         }
 

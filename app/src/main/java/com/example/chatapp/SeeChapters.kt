@@ -3,6 +3,7 @@ package com.example.chatapp
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.ImageButton
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -29,6 +30,7 @@ class SeeChapters : AppCompatActivity() {
     private lateinit var chapter_table_view : TableLayout
     private val storage = FirebaseStorage.getInstance()
     private lateinit var id_libro : String
+    private lateinit var returnButtonView: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +41,22 @@ class SeeChapters : AppCompatActivity() {
         val id = intent.getStringExtra("id")
         id_libro = id!!
         fetchTable()
+        returnButtonView = findViewById(R.id.btnReturnBook)
+        returnButtonView.setOnClickListener {
+            val intent = Intent(this, WatchBook::class.java)
+            intent.putExtra("id", id_libro)
+            intent.putExtra("titulo", titulo_libro.text.toString())
+            intent.putExtra("autor", intent.getStringExtra("autor"))
+            intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+            startActivity(intent)
+        }
 
         crear_capitulo_btn.setOnClickListener{
             val intent = Intent(this, AddChapter::class.java)
             intent.putExtra("id", id)
             intent.putExtra("titulo", titulo_libro.text.toString())
+            intent.putExtra("autor", intent.getStringExtra("autor"))
+            intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
             startActivity(intent)
         }
 
@@ -135,6 +148,9 @@ class SeeChapters : AppCompatActivity() {
                         intent.putExtra("book_id", book_id)
                         intent.putExtra("path", audio_path)
                         intent.putExtra("orden", orden.toString())
+                        intent.putExtra("autor", intent.getStringExtra("autor"))
+                        intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+
                         startActivity(intent)
                     }
                     row.addView(nombreCapituloView)
