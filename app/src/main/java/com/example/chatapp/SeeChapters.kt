@@ -31,6 +31,8 @@ class SeeChapters : AppCompatActivity() {
     private val storage = FirebaseStorage.getInstance()
     private lateinit var id_libro : String
     private lateinit var returnButtonView: ImageButton
+    private lateinit var sinopsis : String
+    private lateinit var autor : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +42,16 @@ class SeeChapters : AppCompatActivity() {
         titulo_libro.text = intent.getStringExtra("titulo")
         val id = intent.getStringExtra("id")
         id_libro = id!!
+        sinopsis = intent.getStringExtra("sinopsis").toString()
+        autor = intent.getStringExtra("autor").toString()
         fetchTable()
         returnButtonView = findViewById(R.id.btnReturnBook)
         returnButtonView.setOnClickListener {
             val intent = Intent(this, WatchBook::class.java)
             intent.putExtra("id", id_libro)
             intent.putExtra("titulo", titulo_libro.text.toString())
-            intent.putExtra("autor", intent.getStringExtra("autor"))
-            intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+            intent.putExtra("autor", autor)
+            intent.putExtra("sinopsis", sinopsis)
             startActivity(intent)
         }
 
