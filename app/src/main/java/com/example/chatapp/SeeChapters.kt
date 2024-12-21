@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.chatapp.recycleview.item.Chapter
+import com.example.chatapp.recycleview.item.ChapterData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -51,9 +53,11 @@ class SeeChapters : AppCompatActivity() {
         databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
         val query = databaseRef.orderByChild("book_id").equalTo(id_libro)
         chapter_table_view = findViewById(R.id.chapter_table)
+
         val eventListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (ds in dataSnapshot.children) {
+                var list_chapters = mutableListOf<ChapterData>()
+                for (ds in dataSnapshot.children){
                     val nombre_capitulo = ds.child("nombre_capitulo").getValue(String::class.java)
                     val audio_path = ds.child("path").getValue(String::class.java)
                     val book_id = ds.child("book_id").getValue(String::class.java)
@@ -136,13 +140,22 @@ class SeeChapters : AppCompatActivity() {
                     row.addView(nombreCapituloView)
                     row.addView(deleteButton)
 
-
-                    chapter_table_view.addView(row)
+                    val ord = ds.child("orden").getValue(Long::class.java) ?: 0
+                    val data = ChapterData(row, ord)
+                    if (data != null) {
+                        list_chapters.add(data)
+                    }
+                }
+                for (dat in list_chapters.sortedBy { it.orden }) {
+                    chapter_table_view.addView(dat.row)
 
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {
             }
+
+
+
         }
 
         query.addListenerForSingleValueEvent(eventListener)
