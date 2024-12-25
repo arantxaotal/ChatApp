@@ -58,11 +58,14 @@ class PlayChapter : AppCompatActivity() {
             if (videoView?.isPlaying == true) {
                 videoView?.stopPlayback()
             }
+            val autor_add = intent.getStringExtra("autor")
+            val sinopsis_add = intent.getStringExtra("sinopsis")
+
             val intent = Intent(this@PlayChapter, SeeChapters::class.java)
             intent.putExtra("titulo", titulo_libro)
             intent.putExtra("id", book_id)
-            intent.putExtra("autor", intent.getStringExtra("autor"))
-            intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+            intent.putExtra("autor", autor_add)
+            intent.putExtra("sinopsis", sinopsis_add)
             startActivity(intent)
         }
 

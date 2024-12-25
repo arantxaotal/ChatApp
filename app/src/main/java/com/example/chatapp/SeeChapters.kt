@@ -173,6 +173,8 @@ class SeeChapters : AppCompatActivity() {
                     nombreCapituloView.setPadding(10, 10, 10, 10)
                     nombreCapituloView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
 
+                    val autor = intent.getStringExtra("autor")
+                    val sinopsis = intent.getStringExtra("sinopsis")
                     nombreCapituloView.isClickable = true
                     nombreCapituloView.setOnClickListener{
                         val intent = Intent(this@SeeChapters, PlayChapter::class.java)
@@ -182,8 +184,8 @@ class SeeChapters : AppCompatActivity() {
                         intent.putExtra("book_id", book_id)
                         intent.putExtra("path", audio_path)
                         intent.putExtra("orden", orden.toString())
-                        intent.putExtra("autor", intent.getStringExtra("autor"))
-                        intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+                        intent.putExtra("autor", autor)
+                        intent.putExtra("sinopsis", sinopsis)
 
                         startActivity(intent)
                     }
