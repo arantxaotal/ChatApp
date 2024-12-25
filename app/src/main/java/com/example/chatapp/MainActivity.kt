@@ -1,12 +1,15 @@
 package com.example.chatapp
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TableLayout
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var databaseRef: DatabaseReference
     private lateinit var add_button: FloatingActionButton
     private lateinit var book_table_view : TableLayout
+    private var privado : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +63,23 @@ class MainActivity : AppCompatActivity() {
                     val autor = ds.child("autor").getValue(String::class.java)
                     val sinopsis = ds.child("sinopsis").getValue(String::class.java)
                     val id = ds.child("id").getValue(String::class.java)
+                    privado = ds.child("privado").getValue(Boolean::class.java) == true
                     val tituloView = TextView(this@MainActivity)
-                    val deleteButton = FloatingActionButton(this@MainActivity)
+                    val deleteButton = ImageButton(this@MainActivity)
+                    deleteButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_delete_outline_24))
+                    val selectableBackground = TypedValue()
+                    theme.resolveAttribute(android.R.attr.selectableItemBackground, selectableBackground, true)
+                    deleteButton.setBackgroundResource(selectableBackground.resourceId)
+                    val editButton = ImageButton(this@MainActivity)
+                    editButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_edit_24_purple))
+                    editButton.setBackgroundResource(selectableBackground.resourceId)
                     val row = TableRow(this@MainActivity)
 
                     row.layoutParams = TableLayout.LayoutParams(
                         TableLayout.LayoutParams.MATCH_PARENT,
                         TableLayout.LayoutParams.WRAP_CONTENT
                     )
-                    deleteButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_delete_outline_24))
+
                     tituloView.ellipsize = TextUtils.TruncateAt.END  // Truncate if text is too long
                     tituloView.maxLines = 1
                     tituloView.textSize = 20f
@@ -77,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                     if(usuario_uuid != ds.child("usuario_creador").getValue(String::class.java))
                     {
                         deleteButton.isEnabled = false
+                        editButton.isEnabled = false
                     }
 
 
@@ -115,6 +128,19 @@ class MainActivity : AppCompatActivity() {
 
                     }
 
+                    editButton.setOnClickListener()
+                    {
+                        val intent = Intent(this@MainActivity, AddBook::class.java)
+                        intent.putExtra("id", id)
+                        intent.putExtra("titulo", titulo)
+                        intent.putExtra("autor", autor)
+                        intent.putExtra("sinopsis", sinopsis)
+                        intent.putExtra("edit", true)
+                        intent.putExtra("usuario_uuid", usuario_uuid)
+                        intent.putExtra("privado", privado)
+                        startActivity(intent)
+                    }
+
                     tituloView.isClickable = true
                     tituloView.setOnClickListener {
                         val intent = Intent(this@MainActivity, WatchBook::class.java)
@@ -126,6 +152,7 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     row.addView(tituloView)
+                    row.addView(editButton)
                     row.addView(deleteButton)
                     book_table_view.addView(row)
 

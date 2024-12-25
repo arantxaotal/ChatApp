@@ -3,6 +3,7 @@ package com.example.chatapp
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.TypedValue
 import android.widget.ImageButton
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -33,6 +34,13 @@ class SeeChapters : AppCompatActivity() {
     private lateinit var returnButtonView: ImageButton
     private lateinit var sinopsis : String
     private lateinit var autor : String
+    private var nombre_capitulo : String? = null
+    private var audio_path : String? = null
+    private var book_id : String? = null
+    private var id : String? = null
+    private var orden : Long? = null
+    private lateinit var nombreCapituloView : TextView
+    private lateinit var usuario_uuid : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +74,7 @@ class SeeChapters : AppCompatActivity() {
 
     }
     private fun fetchTable() {
-        val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         databaseRef = FirebaseDatabase.getInstance().getReference("Chapters/")
         val query = databaseRef.orderByChild("book_id").equalTo(id_libro)
         chapter_table_view = findViewById(R.id.chapter_table)
@@ -75,13 +83,14 @@ class SeeChapters : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var list_chapters = mutableListOf<ChapterData>()
                 for (ds in dataSnapshot.children){
-                    val nombre_capitulo = ds.child("nombre_capitulo").getValue(String::class.java)
-                    val audio_path = ds.child("path").getValue(String::class.java)
-                    val book_id = ds.child("book_id").getValue(String::class.java)
-                    val id = ds.child("id").getValue(String::class.java)
-                    val orden = ds.child("orden").getValue(Long::class.java)
-                    val nombreCapituloView = TextView(this@SeeChapters)
-                    val deleteButton = FloatingActionButton(this@SeeChapters)
+                    nombre_capitulo = ds.child("nombre_capitulo").getValue(String::class.java)
+                    audio_path = ds.child("path").getValue(String::class.java)
+                    book_id = ds.child("book_id").getValue(String::class.java)
+                    id = ds.child("id").getValue(String::class.java)
+                    orden = ds.child("orden").getValue(Long::class.java)
+                    nombreCapituloView = TextView(this@SeeChapters)
+                    val deleteButton = ImageButton(this@SeeChapters)
+                    val editButton = ImageButton(this@SeeChapters)
                     val row = TableRow(this@SeeChapters)
                     if(usuario_uuid != ds.child("usuario_creador").getValue(String::class.java))
                     {
@@ -89,6 +98,11 @@ class SeeChapters : AppCompatActivity() {
                     }
 
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@SeeChapters, R.drawable.baseline_delete_outline_24))
+                    val selectableBackground = TypedValue()
+                    theme.resolveAttribute(android.R.attr.selectableItemBackground, selectableBackground, true)
+                    deleteButton.setBackgroundResource(selectableBackground.resourceId)
+                    editButton.setImageDrawable(ContextCompat.getDrawable(this@SeeChapters, R.drawable.baseline_edit_24_purple))
+                    editButton.setBackgroundResource(selectableBackground.resourceId)
 
                     deleteButton.setOnClickListener {
                         // Build the AlertDialog
@@ -100,7 +114,7 @@ class SeeChapters : AppCompatActivity() {
                                 {
                                     val storageRef = storage.reference
 
-                                    val desertRef = storageRef.child(audio_path)
+                                    val desertRef = storageRef.child(audio_path!!)
                                     // Delete the file
                                     desertRef.delete().addOnSuccessListener {
                                         databaseRef.child(id!!).removeValue()
@@ -135,6 +149,22 @@ class SeeChapters : AppCompatActivity() {
 
 
                     }
+                    editButton.setOnClickListener{
+                        val intent = Intent(this@SeeChapters, AddChapter::class.java)
+                        intent.putExtra("id", id)
+                        intent.putExtra("titulo", nombre_capitulo)
+                        intent.putExtra("titulo_libro", titulo_libro.text)
+                        intent.putExtra("book_id", book_id)
+                        intent.putExtra("path", audio_path)
+                        intent.putExtra("orden", orden.toString())
+                        intent.putExtra("autor", autor)
+                        intent.putExtra("sinopsis",sinopsis)
+                        intent.putExtra("usuario_creador", usuario_uuid)
+                        intent.putExtra("edit", true)
+
+                        startActivity(intent)
+
+                    }
                     // Handling long text
                     nombreCapituloView.text = nombre_capitulo
                     nombreCapituloView.ellipsize = TextUtils.TruncateAt.END  // Truncate if text is too long
@@ -158,6 +188,7 @@ class SeeChapters : AppCompatActivity() {
                         startActivity(intent)
                     }
                     row.addView(nombreCapituloView)
+                    row.addView(editButton)
                     row.addView(deleteButton)
 
                     val ord = ds.child("orden").getValue(Long::class.java) ?: 0
