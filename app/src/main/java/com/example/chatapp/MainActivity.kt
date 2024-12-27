@@ -130,6 +130,9 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 })
                                 databaseRef.child(id!!).removeValue()
+                                val storageReference = FirebaseStorage.getInstance().reference
+                                val imageFileRef = storageReference.child("${path}")
+                                imageFileRef.delete()
                                 book_table_view.removeView(row)
                                 Toast.makeText(this@MainActivity, "Libro eliminado", Toast.LENGTH_SHORT).show()
 
