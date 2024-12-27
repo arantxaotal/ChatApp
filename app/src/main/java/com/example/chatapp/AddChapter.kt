@@ -34,9 +34,17 @@ class AddChapter : AppCompatActivity() {
     lateinit var titulo : String
     lateinit var orden_capitulo : TextView
     private var edit : Boolean = false
+    private var book_id : String = ""
+    private var titulo_libro : String? = null
+    private var autor_add : String? = null
+    private var sinopsis_add : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         titulo = intent.getStringExtra("titulo").toString()
+        titulo_libro = titulo
+        autor_add = intent.getStringExtra("autor")
+        sinopsis_add = intent.getStringExtra("sinopsis")
+        book_id = intent.getStringExtra("id").toString()
         database = Firebase.database.reference
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chapter)
@@ -93,7 +101,6 @@ class AddChapter : AppCompatActivity() {
 
     private fun crearCapitulo() {
         val file_storage = FirebaseStorage.getInstance().reference
-        val id =  intent.getStringExtra("id")
         path_view = findViewById(R.id.path)
         nombre_capitulo = findViewById(R.id.namechapter)
         orden_capitulo = findViewById(R.id.num_cap)
@@ -122,10 +129,6 @@ class AddChapter : AppCompatActivity() {
                     "path" to path_view.text.toString()
                 )
 
-                val titulo_libro = intent.getStringExtra("titulo_libro")
-                val autor_add = intent.getStringExtra("autor")
-                val sinopsis_add = intent.getStringExtra("sinopsis")
-                val book_id = intent.getStringExtra("book_id")
 
 
                 add_chapter.updateChildren(updates)
@@ -139,7 +142,7 @@ class AddChapter : AppCompatActivity() {
             else if(edit && intent.getStringExtra("id") != null && document_file != null) {
                 val uri = document_file!!.uri
                 val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-                val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString(),orden_capitulo.text.toString().toInt(), usuario_uuid)
+                val capitulo_nuevo = Chapter("audios/${name_file}",book_id,nombre_capitulo.text.toString(),orden_capitulo.text.toString().toInt(), usuario_uuid)
                 // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
                 val uploadTask = file_storage.child("audios/${name_file}").putFile(uri)
                 uploadTask.addOnSuccessListener {
@@ -165,12 +168,13 @@ class AddChapter : AppCompatActivity() {
                                         "path" to path_view.text.toString()
                                     )
 
+
                                     add_chapter.updateChildren(updates)
                                     val intent = Intent(this@AddChapter, SeeChapters::class.java)
-                                    intent.putExtra("titulo", intent.getStringExtra("titulo_libro"))
-                                    intent.putExtra("id", intent.getStringExtra("book_id"))
-                                    intent.putExtra("autor", intent.getStringExtra("autor"))
-                                    intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+                                    intent.putExtra("titulo", titulo_libro)
+                                    intent.putExtra("id", book_id)
+                                    intent.putExtra("autor", autor_add)
+                                    intent.putExtra("sinopsis", sinopsis_add)
                                     startActivity(intent)
 
 
@@ -189,7 +193,7 @@ class AddChapter : AppCompatActivity() {
             {
                 val uri = document_file?.uri
                 val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-                val capitulo_nuevo = Chapter("audios/${name_file}",id.toString(),nombre_capitulo.text.toString(),orden_capitulo.text.toString().toInt(), usuario_uuid)
+                val capitulo_nuevo = Chapter("audios/${name_file}",book_id,nombre_capitulo.text.toString(),orden_capitulo.text.toString().toInt(), usuario_uuid)
                 // SUBE ARCHIVO AL ALMACENAMIENTO EN LA NUBE
                 val uploadTask = uri?.let { file_storage.child("audios/${name_file}").putFile(it) }
                 if (uploadTask != null) {
@@ -208,10 +212,10 @@ class AddChapter : AppCompatActivity() {
                                         database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
                                         Toast.makeText(this@AddChapter, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
                                         val intent = Intent(this@AddChapter, SeeChapters::class.java)
-                                        intent.putExtra("titulo", intent.getStringExtra("titulo_libro"))
-                                        intent.putExtra("id", intent.getStringExtra("book_id"))
-                                        intent.putExtra("autor", intent.getStringExtra("autor"))
-                                        intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+                                        intent.putExtra("titulo", titulo_libro)
+                                        intent.putExtra("id", book_id)
+                                        intent.putExtra("autor", autor_add)
+                                        intent.putExtra("sinopsis", sinopsis_add)
                                         startActivity(intent)
 
 

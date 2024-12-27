@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         fetchTable()
         add_button = findViewById(R.id.floatingActionButton)
         add_button.setOnClickListener {

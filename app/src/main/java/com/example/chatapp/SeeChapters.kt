@@ -30,7 +30,7 @@ class SeeChapters : AppCompatActivity() {
     private lateinit var databaseRef: DatabaseReference
     private lateinit var chapter_table_view : TableLayout
     private val storage = FirebaseStorage.getInstance()
-    private lateinit var id_libro : String
+    private var id_libro : String = ""
     private lateinit var returnButtonView: ImageButton
     private lateinit var sinopsis : String
     private lateinit var autor : String
@@ -41,6 +41,7 @@ class SeeChapters : AppCompatActivity() {
     private var orden : Long? = null
     private lateinit var nombreCapituloView : TextView
     private lateinit var usuario_uuid : String
+    private var path : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ class SeeChapters : AppCompatActivity() {
         id_libro = id!!
         sinopsis = intent.getStringExtra("sinopsis").toString()
         autor = intent.getStringExtra("autor").toString()
-        val path = intent.getStringExtra("path")
+        path = intent.getStringExtra("path")
         fetchTable()
         returnButtonView = findViewById(R.id.btnReturnBook)
         returnButtonView.setOnClickListener {
@@ -67,10 +68,10 @@ class SeeChapters : AppCompatActivity() {
 
         crear_capitulo_btn.setOnClickListener{
             val intent = Intent(this, AddChapter::class.java)
-            intent.putExtra("id", id)
+            intent.putExtra("id", id_libro)
             intent.putExtra("titulo", titulo_libro.text.toString())
-            intent.putExtra("autor", intent.getStringExtra("autor"))
-            intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+            intent.putExtra("autor", autor)
+            intent.putExtra("sinopsis", sinopsis)
             intent.putExtra("path", path)
             startActivity(intent)
         }
