@@ -137,6 +137,7 @@ class AddChapter : AppCompatActivity() {
                 intent.putExtra("id", book_id)
                 intent.putExtra("autor", autor_add)
                 intent.putExtra("sinopsis", sinopsis_add)
+                intent.putExtra("path", path_view.text.toString())
                 startActivity(intent)
             }
             else if(edit && intent.getStringExtra("id") != null && document_file != null) {
