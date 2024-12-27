@@ -57,8 +57,7 @@ class AddBook : AppCompatActivity() {
             val success = crearLibro()
             if (success)
             {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+
             }else
             {
                 Toast.makeText(this, "Por favor, rellene todos los campos", Toast.LENGTH_SHORT).show()
@@ -104,6 +103,7 @@ class AddBook : AppCompatActivity() {
                         path_file = document_file!!.uri.path.toString()
                         path_view = findViewById(R.id.path)
                         path_view.text = name_file
+                        Toast.makeText(this, "Portada seleccionada", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -166,7 +166,10 @@ class AddBook : AppCompatActivity() {
                                         success = false
                                     } else {
                                         database.child("Books").child(libro_nuevo.id).setValue(libro_nuevo)
-                                        Toast.makeText(this@AddBook, "Libro subido correctamente", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this@AddBook, "Libro creado", Toast.LENGTH_SHORT).show()
+                                        val intent = Intent(this@AddBook, MainActivity::class.java)
+                                        startActivity(intent)
+
                                     }
                                 }
 
