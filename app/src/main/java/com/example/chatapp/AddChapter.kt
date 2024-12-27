@@ -41,10 +41,10 @@ class AddChapter : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         titulo = intent.getStringExtra("titulo").toString()
-        titulo_libro = titulo
+        titulo_libro = intent.getStringExtra("titulo_libro")
         autor_add = intent.getStringExtra("autor")
         sinopsis_add = intent.getStringExtra("sinopsis")
-        book_id = intent.getStringExtra("id").toString()
+        book_id = intent.getStringExtra("book_id").toString()
         database = Firebase.database.reference
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chapter)
@@ -175,6 +175,8 @@ class AddChapter : AppCompatActivity() {
                                     intent.putExtra("id", book_id)
                                     intent.putExtra("autor", autor_add)
                                     intent.putExtra("sinopsis", sinopsis_add)
+                                    intent.putExtra("path", path_view.text.toString())
+
                                     startActivity(intent)
 
 
@@ -216,6 +218,7 @@ class AddChapter : AppCompatActivity() {
                                         intent.putExtra("id", book_id)
                                         intent.putExtra("autor", autor_add)
                                         intent.putExtra("sinopsis", sinopsis_add)
+                                        intent.putExtra("path", path_view.text.toString())
                                         startActivity(intent)
 
 
