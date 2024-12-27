@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var databaseRef: DatabaseReference
     private lateinit var add_button: FloatingActionButton
     private lateinit var book_table_view : TableLayout
-    private var privado : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     val sinopsis = ds.child("sinopsis").getValue(String::class.java)
                     val id = ds.child("id").getValue(String::class.java)
                     val path = ds.child("path_image").getValue(String::class.java)
-                    privado = ds.child("privado").getValue(Boolean::class.java) == true
+                    val privado = ds.child("privado").getValue(Boolean::class.java) == true
                     val tituloView = TextView(this@MainActivity)
                     val deleteButton = ImageButton(this@MainActivity)
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_delete_outline_24))
@@ -157,6 +156,7 @@ class MainActivity : AppCompatActivity() {
                         intent.putExtra("edit", true)
                         intent.putExtra("usuario_uuid", usuario_uuid)
                         intent.putExtra("privado", privado)
+                        intent.putExtra("path", path)
                         startActivity(intent)
                     }
 

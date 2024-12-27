@@ -46,6 +46,7 @@ class AddBook : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_book)
         path_view = findViewById(R.id.path)
+        path_view.text = intent.getStringExtra("path") ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("Books")
         edit = intent.getBooleanExtra("edit", false)
         database = Firebase.database.reference
@@ -138,11 +139,18 @@ class AddBook : AppCompatActivity() {
                     "autor" to autor.text.toString(),
                     "sinopsis" to sinopsis.text.toString(),
                     "privado" to libro_privado,
-                    "path_image" to "portadas/${name_file}"
+                    "path_image" to path_view.text.toString()
 
                 )
 
-                libro_update.updateChildren(updates)
+                libro_update.updateChildren(updates).addOnSuccessListener{
+                    Toast.makeText(this@AddBook, "Libro actualizado", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@AddBook, MainActivity::class.java)
+                    startActivity(intent)
+                }
+                    .addOnFailureListener {
+                        success = false
+                    }
 
             }
         }else
