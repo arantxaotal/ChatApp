@@ -10,7 +10,8 @@ class Book(
     autor: String = "",
     sinopsis: String = "",
     privado: Boolean = false,
-    usuario_creador: String = ""
+    usuario_creador: String = "",
+    path_image: String = ""
 ) {
     val id: String = UUID.randomUUID().toString()
     val titulo: String = titulo
@@ -21,6 +22,8 @@ class Book(
     // Save the current date under a node
     val fecha_creacion = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(Date())
     val usuario_creador: String = usuario_creador
+    val path_image: String = path_image
+
 
 
 }

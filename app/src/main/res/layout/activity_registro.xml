@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/la_belle_aurore"
+            android:fontFamily="sans-serif-black"
             android:text="Registro"
             android:textColor="#673AB7"
             android:textSize="40sp"

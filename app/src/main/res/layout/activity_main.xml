@@ -12,13 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/la_belle_aurore"
-            android:text="Libros"
+            android:fontFamily="sans-serif-black"
             android:gravity="center"
+            android:text="Libros"
             android:textColor="#673AB7"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -28,7 +29,30 @@
         <TableLayout
             android:id="@+id/book_table"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="770dp"/>
+
+        <!-- TabLayout at the bottom -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            app:tabIndicatorColor="@color/purple"
+            app:tabSelectedTextColor="@color/purple"
+            app:tabTextColor="@color/grey">
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/mis_libros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Mis Libros" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/todos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Todos" />
+        </com.google.android.material.tabs.TabLayout>
 
     </LinearLayout>
 
@@ -48,4 +72,6 @@
         android:layout_marginBottom="80dp"
         android:clickable="true"
         app:srcCompat="@drawable/baseline_add_24" />
+
+
 </RelativeLayout>

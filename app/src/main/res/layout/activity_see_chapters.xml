@@ -27,7 +27,7 @@
             android:id="@+id/titulo_libro"            android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/la_belle_aurore"
+            android:fontFamily="sans-serif-black"
             android:text="Libro"
             android:gravity="center"
             android:textColor="#673AB7"

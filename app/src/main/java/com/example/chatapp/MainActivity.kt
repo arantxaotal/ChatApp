@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.RelativeLayout
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                     val autor = ds.child("autor").getValue(String::class.java)
                     val sinopsis = ds.child("sinopsis").getValue(String::class.java)
                     val id = ds.child("id").getValue(String::class.java)
+                    val path = ds.child("path_image").getValue(String::class.java)
                     privado = ds.child("privado").getValue(Boolean::class.java) == true
                     val tituloView = TextView(this@MainActivity)
                     val deleteButton = ImageButton(this@MainActivity)
@@ -73,6 +75,9 @@ class MainActivity : AppCompatActivity() {
                     val editButton = ImageButton(this@MainActivity)
                     editButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_edit_24_purple))
                     editButton.setBackgroundResource(selectableBackground.resourceId)
+                    editButton.setPadding(0, 60, 0, 0)
+                    deleteButton.setPadding(0, 60, 0, 0)
+
                     val row = TableRow(this@MainActivity)
 
                     row.layoutParams = TableLayout.LayoutParams(
@@ -80,9 +85,20 @@ class MainActivity : AppCompatActivity() {
                         TableLayout.LayoutParams.WRAP_CONTENT
                     )
 
+
+                    // Set drawable on the left (icon resource)
+                    tituloView.setCompoundDrawablesWithIntrinsicBounds(
+                        R.mipmap.ic_book_round, // Left drawable
+                        0, // Top drawable
+                        0, // Right drawable
+                        0  // Bottom drawable
+                    )
+
+
                     tituloView.ellipsize = TextUtils.TruncateAt.END  // Truncate if text is too long
                     tituloView.maxLines = 1
                     tituloView.textSize = 20f
+                    tituloView.gravity = Gravity.CENTER_VERTICAL
                     tituloView.text = titulo
                     tituloView.setPadding(10, 10, 10, 10)
                     tituloView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
@@ -148,6 +164,7 @@ class MainActivity : AppCompatActivity() {
                         intent.putExtra("titulo", titulo)
                         intent.putExtra("autor", autor)
                         intent.putExtra("sinopsis", sinopsis)
+                        intent.putExtra("path", path)
                         startActivity(intent)
 
                     }

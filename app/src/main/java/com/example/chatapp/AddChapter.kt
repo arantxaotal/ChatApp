@@ -157,7 +157,7 @@ class AddChapter : AppCompatActivity() {
                                 else
                                 {
                                     val add_chapter =
-                                        database.child("Chapter").child(intent.getStringExtra("id").toString())
+                                        database.child("Chapters").child(intent.getStringExtra("id").toString())
 
                                     val updates = mapOf(
                                         "nombre_capitulo" to nombre_capitulo.text.toString(),

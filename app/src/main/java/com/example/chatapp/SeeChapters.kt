@@ -52,6 +52,7 @@ class SeeChapters : AppCompatActivity() {
         id_libro = id!!
         sinopsis = intent.getStringExtra("sinopsis").toString()
         autor = intent.getStringExtra("autor").toString()
+        val path = intent.getStringExtra("path")
         fetchTable()
         returnButtonView = findViewById(R.id.btnReturnBook)
         returnButtonView.setOnClickListener {
@@ -60,6 +61,7 @@ class SeeChapters : AppCompatActivity() {
             intent.putExtra("titulo", titulo_libro.text.toString())
             intent.putExtra("autor", autor)
             intent.putExtra("sinopsis", sinopsis)
+            intent.putExtra("path", path)
             startActivity(intent)
         }
 
@@ -69,6 +71,7 @@ class SeeChapters : AppCompatActivity() {
             intent.putExtra("titulo", titulo_libro.text.toString())
             intent.putExtra("autor", intent.getStringExtra("autor"))
             intent.putExtra("sinopsis", intent.getStringExtra("sinopsis"))
+            intent.putExtra("path", path)
             startActivity(intent)
         }
 

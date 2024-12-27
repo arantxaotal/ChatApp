@@ -60,6 +60,7 @@ dependencies {
 
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 
 
     // Add the dependencies for any other desired Firebase products
