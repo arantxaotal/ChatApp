@@ -87,11 +87,11 @@ class SeeChapters : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var list_chapters = mutableListOf<ChapterData>()
                 for (ds in dataSnapshot.children){
-                    nombre_capitulo = ds.child("nombre_capitulo").getValue(String::class.java)
-                    audio_path = ds.child("path").getValue(String::class.java)
-                    book_id = ds.child("book_id").getValue(String::class.java)
-                    id = ds.child("id").getValue(String::class.java)
-                    orden = ds.child("orden").getValue(Long::class.java)
+                    var nombre_capitulo = ds.child("nombre_capitulo").getValue(String::class.java)
+                    var audio_path = ds.child("path").getValue(String::class.java)
+                    var book_id = ds.child("book_id").getValue(String::class.java)
+                    var id = ds.child("id").getValue(String::class.java)
+                    var orden = ds.child("orden").getValue(Long::class.java)
                     nombreCapituloView = TextView(this@SeeChapters)
                     val deleteButton = ImageButton(this@SeeChapters)
                     val editButton = ImageButton(this@SeeChapters)
