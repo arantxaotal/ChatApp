@@ -56,6 +56,8 @@ class PlayChapter : AppCompatActivity() {
         val autor_add = intent.getStringExtra("autor")
         val sinopsis_add = intent.getStringExtra("sinopsis")
         val path_image = intent.getStringExtra("path_image")
+        val titulo_libro = intent.getStringExtra("titulo_libro")
+        val book_id = intent.getStringExtra("book_id")
 
         returnButtonView.setOnClickListener {
             if (videoView?.isPlaying == true) {

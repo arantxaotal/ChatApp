@@ -133,7 +133,7 @@ class AddChapter : AppCompatActivity() {
 
                 add_chapter.updateChildren(updates)
                 val intent = Intent(this@AddChapter, SeeChapters::class.java)
-                intent.putExtra("titulo", titulo_libro)
+                intent.putExtra("titulo_libro", titulo_libro)
                 intent.putExtra("id", book_id)
                 intent.putExtra("autor", autor_add)
                 intent.putExtra("sinopsis", sinopsis_add)
@@ -172,7 +172,7 @@ class AddChapter : AppCompatActivity() {
 
                                     add_chapter.updateChildren(updates)
                                     val intent = Intent(this@AddChapter, SeeChapters::class.java)
-                                    intent.putExtra("titulo", titulo_libro)
+                                    intent.putExtra("titulo_libro", titulo_libro)
                                     intent.putExtra("id", book_id)
                                     intent.putExtra("autor", autor_add)
                                     intent.putExtra("sinopsis", sinopsis_add)
@@ -215,7 +215,7 @@ class AddChapter : AppCompatActivity() {
                                         database.child("Chapters").child(capitulo_nuevo.id).setValue(capitulo_nuevo)
                                         Toast.makeText(this@AddChapter, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
                                         val intent = Intent(this@AddChapter, SeeChapters::class.java)
-                                        intent.putExtra("titulo", titulo_libro)
+                                        intent.putExtra("titulo_libro", titulo_libro)
                                         intent.putExtra("id", book_id)
                                         intent.putExtra("autor", autor_add)
                                         intent.putExtra("sinopsis", sinopsis_add)

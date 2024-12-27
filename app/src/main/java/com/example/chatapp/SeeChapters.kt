@@ -48,7 +48,7 @@ class SeeChapters : AppCompatActivity() {
         setContentView(R.layout.activity_see_chapters)
         crear_capitulo_btn = findViewById(R.id.crear_capitulo_btn)
         titulo_libro = findViewById(R.id.titulo_libro)
-        titulo_libro.text = intent.getStringExtra("titulo")
+        titulo_libro.text = intent.getStringExtra("titulo_libro")
         val id = intent.getStringExtra("id")
         id_libro = id!!
         sinopsis = intent.getStringExtra("sinopsis").toString()
@@ -184,7 +184,7 @@ class SeeChapters : AppCompatActivity() {
                         val intent = Intent(this@SeeChapters, PlayChapter::class.java)
                         intent.putExtra("id", id)
                         intent.putExtra("titulo", nombre_capitulo)
-                        intent.putExtra("titulo_libro", titulo_libro.text)
+                        intent.putExtra("titulo_libro", titulo_libro.text.toString())
                         intent.putExtra("book_id", book_id)
                         intent.putExtra("path", audio_path)
                         intent.putExtra("orden", orden.toString())

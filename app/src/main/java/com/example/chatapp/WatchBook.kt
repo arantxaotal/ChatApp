@@ -65,7 +65,7 @@ class WatchBook(
         ver_capitulos_btn = findViewById(R.id.ver_capitulos_btn)
         ver_capitulos_btn.setOnClickListener{
             val intent = Intent(this, SeeChapters::class.java)
-            intent.putExtra("titulo", titulo.text.toString())
+            intent.putExtra("titulo_libro", titulo.text.toString())
             intent.putExtra("id", id)
             intent.putExtra("autor", autor.text.toString())
             intent.putExtra("sinopsis", sinopsis.text.toString())
