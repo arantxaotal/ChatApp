@@ -190,6 +190,7 @@ class SeeChapters : AppCompatActivity() {
                         intent.putExtra("orden", orden.toString())
                         intent.putExtra("autor", autor)
                         intent.putExtra("sinopsis", sinopsis)
+                        intent.putExtra("path_image", path)
 
                         startActivity(intent)
                     }

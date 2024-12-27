@@ -53,19 +53,24 @@ class PlayChapter : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialize()
+        val autor_add = intent.getStringExtra("autor")
+        val sinopsis_add = intent.getStringExtra("sinopsis")
+        val path_image = intent.getStringExtra("path_image")
 
         returnButtonView.setOnClickListener {
             if (videoView?.isPlaying == true) {
                 videoView?.stopPlayback()
             }
-            val autor_add = intent.getStringExtra("autor")
-            val sinopsis_add = intent.getStringExtra("sinopsis")
 
             val intent = Intent(this@PlayChapter, SeeChapters::class.java)
-            intent.putExtra("titulo", titulo_libro)
+            intent.putExtra("titulo_libro", titulo_libro)
             intent.putExtra("id", book_id)
             intent.putExtra("autor", autor_add)
             intent.putExtra("sinopsis", sinopsis_add)
+            intent.putExtra("autor", autor_add)
+            intent.putExtra("sinopsis", sinopsis_add)
+            intent.putExtra("path", path_image)
+
             startActivity(intent)
         }
 
@@ -91,6 +96,10 @@ class PlayChapter : AppCompatActivity() {
                 intent.putExtra("titulo_libro", titulo_libro)
                 intent.putExtra("path", previousChapter.path)
                 intent.putExtra("orden", previousChapter.orden.toString())
+                intent.putExtra("autor", autor_add)
+                intent.putExtra("sinopsis", sinopsis_add)
+                intent.putExtra("path_image", path_image)
+
                 startActivity(intent)
             }
 
@@ -113,6 +122,9 @@ class PlayChapter : AppCompatActivity() {
                 intent.putExtra("book_id", nextChapter.book_id)
                 intent.putExtra("path", nextChapter.path)
                 intent.putExtra("orden", nextChapter.orden.toString())
+                intent.putExtra("autor", autor_add)
+                intent.putExtra("sinopsis", sinopsis_add)
+                intent.putExtra("path_image", path_image)
                 startActivity(intent)
             }
 
