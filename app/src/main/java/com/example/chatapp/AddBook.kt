@@ -45,6 +45,7 @@ class AddBook : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_book)
+        path_view = findViewById(R.id.path)
         val ref = FirebaseDatabase.getInstance().getReference("Books")
         edit = intent.getBooleanExtra("edit", false)
         database = Firebase.database.reference
@@ -126,7 +127,7 @@ class AddBook : AppCompatActivity() {
         val uid = obtenerUIDUsuarioActual()
         if(edit && intent.getStringExtra("id") != null)
         {
-            if (titulo.text.toString().isEmpty() || autor.text.toString().isEmpty() || sinopsis.text.toString().isEmpty()) {
+            if (titulo.text.toString().isEmpty() || autor.text.toString().isEmpty() || sinopsis.text.toString().isEmpty() || path_view.text.toString().isEmpty() ) {
                 success = false
             }else
             {
@@ -136,7 +137,9 @@ class AddBook : AppCompatActivity() {
                     "titulo" to titulo.text.toString(),
                     "autor" to autor.text.toString(),
                     "sinopsis" to sinopsis.text.toString(),
-                    "privado" to libro_privado
+                    "privado" to libro_privado,
+                    "path_image" to "portadas/${name_file}"
+
                 )
 
                 libro_update.updateChildren(updates)
@@ -144,7 +147,7 @@ class AddBook : AppCompatActivity() {
             }
         }else
         {
-            if (titulo.text.toString().isEmpty() || autor.text.toString().isEmpty() || sinopsis.text.toString().isEmpty()) {
+            if (titulo.text.toString().isEmpty() || autor.text.toString().isEmpty() || sinopsis.text.toString().isEmpty() || path_view.text.toString().isEmpty() ) {
                 success = false
             }else
             {
@@ -157,7 +160,7 @@ class AddBook : AppCompatActivity() {
                     uploadTask.addOnSuccessListener {
                         //GUARDA DATA EN BD de la portada
                         val databaseReference = database.child("Books")
-                        databaseReference.orderByChild("path").equalTo("portadas/${name_file}")
+                        databaseReference.orderByChild("path_image").equalTo("portadas/${name_file}")
                             .addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                                     if (dataSnapshot.exists()) {
