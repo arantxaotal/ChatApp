@@ -20,7 +20,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.viewpager2.widget.ViewPager2
+import com.example.chatapp.recycleview.item.BookData
+import com.example.chatapp.recycleview.item.ChapterData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabItem
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -35,12 +40,40 @@ class MainActivity : AppCompatActivity() {
     private lateinit var databaseRef: DatabaseReference
     private lateinit var add_button: FloatingActionButton
     private lateinit var book_table_view : TableLayout
+    private lateinit var tabs : TabLayout
+    private var all : Boolean = false
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        all = intent.getBooleanExtra("all", false)
+        tabs =  findViewById(R.id.tabLayout)
+        fetchTable(false)
 
-        fetchTable()
+        // Handle tab selection to start a new activity
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val position = tab.position
+                when (position) {
+                    0 -> {
+                        resetTable()
+                        fetchTable(false)
+                    }
+                    1 -> {
+                        resetTable()
+                        fetchTable(true)
+
+                    }
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+        })
+
+
         add_button = findViewById(R.id.floatingActionButton)
         add_button.setOnClickListener {
             val intent = Intent(this, AddBook::class.java)
@@ -52,13 +85,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun fetchTable() {
+    private fun fetchTable(showall : Boolean) {
+
         databaseRef = FirebaseDatabase.getInstance().getReference("Books/")
-        val query = databaseRef.orderByChild("titulo")
-        book_table_view = findViewById(R.id.book_table)
         val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        book_table_view = findViewById(R.id.book_table)
+        val query = databaseRef.orderByChild("titulo")
         val eventListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var list_books = mutableListOf<BookData>()
                 for (ds in dataSnapshot.children) {
                     val titulo = ds.child("titulo").getValue(String::class.java)
                     val autor = ds.child("autor").getValue(String::class.java)
@@ -66,6 +101,7 @@ class MainActivity : AppCompatActivity() {
                     val id = ds.child("id").getValue(String::class.java)
                     val path = ds.child("path_image").getValue(String::class.java)
                     val privado = ds.child("privado").getValue(Boolean::class.java) == true
+                    val usuario_uuid = ds.child("usuario_creador").getValue(String::class.java)
                     val tituloView = TextView(this@MainActivity)
                     val deleteButton = ImageButton(this@MainActivity)
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_delete_outline_24))
@@ -75,8 +111,8 @@ class MainActivity : AppCompatActivity() {
                     val editButton = ImageButton(this@MainActivity)
                     editButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_edit_24_purple))
                     editButton.setBackgroundResource(selectableBackground.resourceId)
-                    editButton.setPadding(0, 60, 0, 0)
-                    deleteButton.setPadding(0, 60, 0, 0)
+                    editButton.setPadding(0, 72, 0, 0)
+                    deleteButton.setPadding(0, 72, 0, 0)
 
                     val row = TableRow(this@MainActivity)
 
@@ -86,13 +122,26 @@ class MainActivity : AppCompatActivity() {
                     )
 
 
-                    // Set drawable on the left (icon resource)
-                    tituloView.setCompoundDrawablesWithIntrinsicBounds(
-                        R.mipmap.ic_book_round, // Left drawable
-                        0, // Top drawable
-                        0, // Right drawable
-                        0  // Bottom drawable
-                    )
+                   if(privado)
+                   {
+                       // Set drawable on the left (icon resource)
+                       tituloView.setCompoundDrawablesWithIntrinsicBounds(
+                           R.mipmap.ic_book_round, // Left drawable
+                           0, // Top drawable
+                           R.drawable.baseline_lock_24, // Right drawable
+                           0  // Bottom drawable
+                       )
+
+                   }else
+                   {
+                       // Set drawable on the left (icon resource)
+                       tituloView.setCompoundDrawablesWithIntrinsicBounds(
+                           R.mipmap.ic_book_round, // Left drawable
+                           0, // Top drawable
+                           0, // Right drawable
+                           0  // Bottom drawable
+                       )
+                   }
 
 
                     tituloView.ellipsize = TextUtils.TruncateAt.END  // Truncate if text is too long
@@ -175,9 +224,28 @@ class MainActivity : AppCompatActivity() {
                     row.addView(tituloView)
                     row.addView(editButton)
                     row.addView(deleteButton)
-                    book_table_view.addView(row)
+                    val data = usuario_uuid?.let { BookData(row, it,privado) }
+                    if (data != null) {
+                        list_books.add(data)
+                    }
+
 
                 }
+
+                if (showall == true)
+                {
+                    for (dat in list_books.filter { it.privado == false }) {
+                        book_table_view.addView(dat.row)
+
+                    }
+                }else
+                {
+                    for (dat in list_books.filter { it.usuariouuid == usuario_uuid }) {
+                        book_table_view.addView(dat.row)
+
+                    }
+                }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -206,5 +274,9 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun resetTable() {
+        book_table_view.removeAllViews()
     }
 }
