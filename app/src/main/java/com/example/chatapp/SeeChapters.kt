@@ -42,6 +42,7 @@ class SeeChapters : AppCompatActivity() {
     private lateinit var nombreCapituloView : TextView
     private lateinit var usuario_uuid : String
     private var path : String? = null
+    private lateinit var tituloLibroView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,21 @@ class SeeChapters : AppCompatActivity() {
             intent.putExtra("sinopsis", sinopsis)
             intent.putExtra("path", path)
             startActivity(intent)
+        }
+        tituloLibroView = findViewById(R.id.titulo_libro)
+        tituloLibroView.setOnClickListener{
+            if (tituloLibroView.maxLines == 1) {
+                // Expand the TextView to show full text
+                tituloLibroView.maxLines = Int.MAX_VALUE
+                tituloLibroView.ellipsize = null
+                tituloLibroView.setSingleLine(false)
+            } else {
+                // Collapse the TextView back to one line
+                tituloLibroView.maxLines = 1
+                tituloLibroView.ellipsize = TextUtils.TruncateAt.END
+                tituloLibroView.setSingleLine(true)
+
+            }
         }
 
         crear_capitulo_btn.setOnClickListener{

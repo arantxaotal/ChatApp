@@ -40,7 +40,8 @@
                 android:ems="10"
                 android:hint="  Titulo"
                 android:inputType="text"
-                android:visibility="visible" />
+                android:visibility="visible"
+                />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="300dp"

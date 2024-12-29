@@ -7,6 +7,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
@@ -53,6 +54,20 @@ class PlayChapter : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialize()
+        titulo_cap.setOnClickListener{
+            if (titulo_cap.maxLines == 1) {
+                // Expand the TextView to show full text
+                titulo_cap.maxLines = Int.MAX_VALUE
+                titulo_cap.ellipsize = null
+                titulo_cap.setSingleLine(false)
+            } else {
+                // Collapse the TextView back to one line
+                titulo_cap.maxLines = 1
+                titulo_cap.ellipsize = TextUtils.TruncateAt.END
+                titulo_cap.setSingleLine(true)
+
+            }
+        }
         val autor_add = intent.getStringExtra("autor")
         val sinopsis_add = intent.getStringExtra("sinopsis")
         val path_image = intent.getStringExtra("path_image")
@@ -221,6 +236,7 @@ class PlayChapter : AppCompatActivity() {
         path = intent.getStringExtra("path").toString()
         titulo_path = intent.getStringExtra("path").toString().split("audios/")[1]
         audioPath.text = titulo_path
+        audioPath.isSelected = true
         // Referencia a Firebase Storage
         storageReference = FirebaseStorage.getInstance().reference
         audioFileRef = storageReference.child("${path}")

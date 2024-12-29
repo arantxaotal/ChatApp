@@ -3,6 +3,7 @@ package com.example.chatapp
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
@@ -27,6 +28,8 @@ class WatchBook(
     private lateinit var imageViewP : ImageView
     private lateinit var path : String
     private lateinit var imageFileRef : StorageReference
+    private lateinit var tituloTextoView : TextView
+    private lateinit var autorTextView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +75,36 @@ class WatchBook(
             intent.putExtra("path", path)
             startActivity(intent)
 
+        }
+        tituloTextoView = findViewById(R.id.titulo_texto)
+        tituloTextoView.setOnClickListener {
+            if (tituloTextoView.maxLines == 1) {
+                // Expand the TextView to show full text
+                tituloTextoView.maxLines = Int.MAX_VALUE
+                tituloTextoView.ellipsize = null
+                tituloTextoView.setSingleLine(false)
+            } else {
+                // Collapse the TextView back to one line
+                tituloTextoView.maxLines = 1
+                tituloTextoView.ellipsize = TextUtils.TruncateAt.END
+                tituloTextoView.setSingleLine(true)
+
+            }
+        }
+        autorTextView = findViewById(R.id.autor_texto)
+        autorTextView.setOnClickListener {
+            if (autorTextView.maxLines == 1) {
+                // Expand the TextView to show full text
+                autorTextView.maxLines = Int.MAX_VALUE
+                autorTextView.ellipsize = null
+                autorTextView.setSingleLine(false)
+            } else {
+                // Collapse the TextView back to one line
+                autorTextView.maxLines = 1
+                autorTextView.ellipsize = TextUtils.TruncateAt.END
+                autorTextView.setSingleLine(true)
+
+            }
         }
     }
 }

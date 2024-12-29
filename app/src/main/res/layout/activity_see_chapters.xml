@@ -6,6 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SeeChapters">
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,10 +29,15 @@
             android:src="@drawable/baseline_keyboard_return_24" />
 
         <TextView
-            android:id="@+id/titulo_libro"            android:layout_width="match_parent"
-            android:layout_height="50sp"
+            android:id="@+id/titulo_libro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-black"
+            android:singleLine="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:ellipsize="end"
             android:text="Libro"
             android:gravity="center"
             android:textColor="#673AB7"
@@ -44,7 +54,7 @@
 
 
     </LinearLayout>
-
+    </ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/crear_capitulo_btn"
         android:layout_width="75dp"
