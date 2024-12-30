@@ -1,16 +1,45 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-        <style name="Base.Theme.ChatApp" parent="Theme.Material3.Light">
-            <item name="toolbarStyle">@style/MyToolbar</item>
-    </style>
-    <style name="MyToolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="android:background">@color/purple_light</item>
 
+    <!-- Base application theme -->
+    <style name="Base.Theme.ChatApp" parent="Theme.Material3.DayNight">
+        <!-- Set Almendra as the default font -->
+        <item name="android:fontFamily">@font/almendra</item>
 
+        <!-- Customize primary colors (optional) -->
+        <item name="colorPrimary">@color/purple_light</item>
+        <item name="colorPrimaryVariant">@color/purple</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Customize Toolbar style -->
+        <item name="toolbarStyle">@style/AlmendraToolbar</item>
     </style>
+
+    <!-- Toolbar style with Almendra font -->
+    <style name="AlmendraToolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextAppearance">@style/AlmendraToolbarTitle</item>
+        <item name="subtitleTextAppearance">@style/AlmendraToolbarSubtitle</item>
+        <item name="android:background">@color/salmon</item>
+        <item name="navigationIcon">@mipmap/ic_libros_foreground</item>
+    </style>
+
+    <!-- Toolbar title style -->
+    <style name="AlmendraToolbarTitle">
+        <item name="android:fontFamily">@font/almendra_sc</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <!-- Toolbar subtitle style -->
+    <style name="AlmendraToolbarSubtitle">
+        <item name="android:fontFamily">@font/almendra_sc</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="Theme.ChatApp" parent="Base.Theme.ChatApp" />
     <style name="ChatApp_no_bar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-    <style name="Theme.ChatApp" parent="Base.Theme.ChatApp" />
+
+
 </resources>

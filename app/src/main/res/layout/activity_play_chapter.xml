@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="Back Button"
-            android:src="@drawable/baseline_keyboard_return_24" />
+            android:src="@drawable/baseline_keyboard_backspace_24" />
 
 
         <TextView
@@ -43,7 +43,7 @@
             android:fontFamily="@font/almendra"
             android:gravity="center"
             android:singleLine="true"
-            android:text="Cruce de caminos"
+            android:text="Capítulo"
             android:textColor="@color/purple"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -79,6 +79,7 @@
             tools:visibility="visible" />
 
         <SeekBar
+            android:thumbTint="@color/salmon"
             android:id="@+id/seekBar"
             android:layout_gravity="center"
             android:layout_width="367dp"
