@@ -1,7 +1,10 @@
 package com.example.chatapp
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.media.MediaRecorder
 import android.os.Bundle
+import android.os.Environment
 import android.text.TextUtils
 import android.util.TypedValue
 import android.widget.ImageButton
@@ -11,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.chatapp.recycleview.item.Chapter
 import com.example.chatapp.recycleview.item.ChapterData
@@ -23,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
+import java.io.IOException
 
 class SeeChapters : AppCompatActivity() {
     private lateinit var crear_capitulo_btn : FloatingActionButton
@@ -43,11 +48,17 @@ class SeeChapters : AppCompatActivity() {
     private lateinit var usuario_uuid : String
     private var path : String? = null
     private lateinit var tituloLibroView : TextView
+    private lateinit var recordButton : FloatingActionButton
+    private lateinit var outputFile: String
+    private lateinit var mediaRecorder: MediaRecorder
+    private var isRecording = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_see_chapters)
         crear_capitulo_btn = findViewById(R.id.crear_capitulo_btn)
+        mediaRecorder = MediaRecorder()
+        recordButton = findViewById(R.id.recordButton)
         titulo_libro = findViewById(R.id.titulo_libro)
         titulo_libro.text = intent.getStringExtra("titulo_libro")
         val id = intent.getStringExtra("id")
@@ -90,6 +101,20 @@ class SeeChapters : AppCompatActivity() {
             intent.putExtra("sinopsis", sinopsis)
             intent.putExtra("path", path)
             startActivity(intent)
+        }
+
+        recordButton.setOnClickListener {
+            if (isRecording) {
+                stopRecording()
+                recordButton.setImageResource(R.drawable.baseline_mic_24) // Change icon back
+                Toast.makeText(this, "Recording stopped", Toast.LENGTH_SHORT).show()
+            } else {
+                if (checkPermissions()) {
+                    startRecording()
+                    recordButton.setImageResource(R.drawable.baseline_fiber_manual_record_24) // Change icon to stop
+                    Toast.makeText(this, "Recording started", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
     }
@@ -235,6 +260,63 @@ class SeeChapters : AppCompatActivity() {
         query.addListenerForSingleValueEvent(eventListener)
 
 
+    }
+    private fun startRecording() {
+        outputFile = "${getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)}/audio_record_${System.currentTimeMillis()}.mp4"
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setOutputFile(outputFile)
+            try {
+                prepare()
+                start()
+                isRecording = true
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(this@SeeChapters, "Failed to start recording", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun stopRecording() {
+        if (isRecording) {
+            mediaRecorder.apply {
+                stop()
+                release()
+            }
+            isRecording = false
+        }
+    }
+
+    private fun checkPermissions(): Boolean {
+        val permissions = arrayOf(
+            android.Manifest.permission.RECORD_AUDIO)
+        val missingPermissions = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        return if (missingPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, missingPermissions.toTypedArray(), 1)
+            false
+        } else {
+            true
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permissions denied", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }
