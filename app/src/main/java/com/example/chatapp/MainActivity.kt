@@ -1,7 +1,11 @@
 package com.example.chatapp
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
@@ -33,6 +37,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class MainActivity : AppCompatActivity() {
@@ -126,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                    {
                        // Set drawable on the left (icon resource)
                        tituloView.setCompoundDrawablesWithIntrinsicBounds(
-                           R.mipmap.ic_book_round, // Left drawable
+                           R.mipmap.ic_book, // Left drawable
                            0, // Top drawable
                            R.drawable.baseline_lock_24, // Right drawable
                            0  // Bottom drawable
@@ -275,7 +280,10 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
+    // Utility function to convert Bitmap to Drawable
+    private fun bitmapToDrawable(context: Context, bitmap: Bitmap): BitmapDrawable {
+        return BitmapDrawable(context.resources, bitmap)
+    }
     private fun resetTable() {
         book_table_view.removeAllViews()
     }
