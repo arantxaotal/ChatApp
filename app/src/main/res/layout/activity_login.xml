@@ -6,15 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Login">
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp"
-        android:gravity="center"
+        android:gravity="left"
         >
+        <ImageButton
+            android:id="@+id/atras_btn"
+            android:layout_width="64dp"
+            android:layout_height="61dp"
+            android:layout_gravity="left"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="Back Button"
+            android:src="@drawable/baseline_keyboard_backspace_24" />
 
         <TextView
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -31,6 +47,7 @@
             android:layout_height="wrap_content"
             style="@style/Widget.Design.TextInputLayout"
             android:textColorHint="@color/grey"
+            android:layout_gravity="center"
             >
         <EditText
             android:drawableStart="@drawable/baseline_email_24"
@@ -49,6 +66,7 @@
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/purple"
             android:textColorHint="@color/grey"
+            android:layout_gravity="center"
             >
         <EditText
             android:drawableStart="@drawable/password"
@@ -63,14 +81,11 @@
             android:layout_marginTop="20dp"
             android:id="@+id/iniciar_sesion_btn"
             android:text="@string/iniciar_sesion_btn"
-            android:layout_width="200dp"
-            android:backgroundTint="@color/purple"
+            android:layout_gravity="center"
+            android:layout_width="150dp"
+            android:backgroundTint="@color/salmon"
             android:layout_height="wrap_content"/>
-        <Button
-            android:backgroundTint="@color/purple"
-            android:id="@+id/atras_btn"
-            android:text="@string/atras_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"/>
+
     </LinearLayout>
+    </ScrollView>>
 </RelativeLayout>
