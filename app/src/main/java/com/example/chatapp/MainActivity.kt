@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                    {
                        // Set drawable on the left (icon resource)
                        tituloView.setCompoundDrawablesWithIntrinsicBounds(
-                           R.mipmap.ic_book, // Left drawable
+                           R.mipmap.ic_book_round, // Left drawable
                            0, // Top drawable
                            R.drawable.baseline_lock_24, // Right drawable
                            0  // Bottom drawable

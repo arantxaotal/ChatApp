@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/almendra"
                 android:text="Capítulo"
             android:textColor="#673AB7"
             android:textSize="40sp"

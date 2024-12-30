@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#673AB7</color>
-    <color name="purple_light">#E9E1F8</color>
+    <color name="purple_light">#A28AD0</color>
     <color name="grey">#808080</color>
     <color name="green">#00FF00</color>
     <color name="red">#FF0000</color>
@@ -31,5 +31,5 @@
     <color name="darksalmon">#E9967A</color>
     <color name="darkseagreen">#8FBC8F</color>
     <color name="darkslategray">#2F4F4F</color>
-    <color name="light_green">#B9D895</color>
+    <color name="light_green">#EDF6E3</color>
 </resources>
