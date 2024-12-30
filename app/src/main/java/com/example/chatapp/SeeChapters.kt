@@ -1,11 +1,16 @@
 package com.example.chatapp
 
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.Log
 import android.util.TypedValue
 import android.widget.ImageButton
 import android.widget.TableLayout
@@ -27,11 +32,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
+import java.io.File
 import java.io.IOException
 
 class SeeChapters : AppCompatActivity() {
     private lateinit var crear_capitulo_btn : FloatingActionButton
     private lateinit var titulo_libro : TextView
+    private var audioUri: Uri? = null
     private lateinit var databaseRef: DatabaseReference
     private lateinit var chapter_table_view : TableLayout
     private val storage = FirebaseStorage.getInstance()
@@ -50,7 +57,7 @@ class SeeChapters : AppCompatActivity() {
     private lateinit var tituloLibroView : TextView
     private lateinit var recordButton : FloatingActionButton
     private lateinit var outputFile: String
-    private lateinit var mediaRecorder: MediaRecorder
+    private var mediaRecorder: MediaRecorder? = null
     private var isRecording = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -261,35 +268,61 @@ class SeeChapters : AppCompatActivity() {
 
 
     }
-    private fun startRecording() {
-        outputFile = "${getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)}/audio_record_${System.currentTimeMillis()}.mp4"
-        mediaRecorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            setOutputFile(outputFile)
-            try {
-                prepare()
-                start()
-                isRecording = true
-            } catch (e: IOException) {
-                e.printStackTrace()
-                Toast.makeText(this@SeeChapters, "Failed to start recording", Toast.LENGTH_SHORT).show()
+
+
+
+    fun startRecording() {
+        if (!isRecording)
+        {
+            isRecording = true
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, "recorded_audio_${System.currentTimeMillis()}.mp4")
+                put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp4")
+                put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_MUSIC + "/BookifyRecordings")
+            }
+            val resolver = contentResolver
+            audioUri = resolver.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values)
+
+            if (audioUri != null) {
+                val descriptor = resolver.openFileDescriptor(audioUri!!, "w")?.fileDescriptor
+                mediaRecorder = MediaRecorder().apply {
+                    setAudioSource(MediaRecorder.AudioSource.MIC)
+                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                    setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                    setOutputFile(descriptor)
+                    prepare()
+                    start()
+                }
+                Log.d("Recording", "Recording started, URI: $audioUri")
+            } else {
+                Log.e("Recording", "Failed to create audio file in MediaStore.")
             }
         }
     }
 
-    private fun stopRecording() {
-        if (isRecording) {
-            mediaRecorder.apply {
-                stop()
-                release()
-            }
+
+    fun stopRecording() {
+        if (isRecording)
+        {
             isRecording = false
+        }
+        mediaRecorder?.apply {
+            stop()
+            release()
+        }
+        mediaRecorder = null
+
+        if (audioUri != null) {
+            Log.d("Recording", "Recording stopped. File saved at URI: $audioUri")
+        } else {
+            Log.e("Recording", "Recording stopped, but URI is null.")
         }
     }
 
     private fun checkPermissions(): Boolean {
+
         val permissions = arrayOf(
             android.Manifest.permission.RECORD_AUDIO)
         val missingPermissions = permissions.filter {
