@@ -52,10 +52,12 @@ class WatchBook(
         // ImageView to display the image
         imageViewP = findViewById(R.id.imageViewPortada)
 
-        // Load image using Glide
-        imageRef.getBytes(1024 * 1024).addOnSuccessListener { bytes ->
-            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-            imageViewP.setImageBitmap(bitmap)
+        imageRef.downloadUrl.addOnSuccessListener { uri ->
+            Glide.with(this)
+                .load(uri)
+                .placeholder(R.mipmap.ic_book_foreground) // Optional: Placeholder while loading
+                .error(R.mipmap.ic_book_foreground) // Optional: Error placeholder
+                .into(imageViewP)
         }.addOnFailureListener { exception ->
             // Handle failure
         }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.TextUtils
@@ -14,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.RelativeLayout
@@ -24,7 +26,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.chatapp.recycleview.item.BookData
 import com.example.chatapp.recycleview.item.ChapterData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -108,6 +112,31 @@ class MainActivity : AppCompatActivity() {
                     val privado = ds.child("privado").getValue(Boolean::class.java) == true
                     val usuario_uuid = ds.child("usuario_creador").getValue(String::class.java)
                     val tituloView = TextView(this@MainActivity)
+                    // Initialize Firebase Storage
+                    val storage = FirebaseStorage.getInstance()
+
+
+                    // Reference to the image in Firebase Storage
+                    val imageRef: StorageReference = storage.reference.child(path!!)
+
+                    var imageBookView = ImageView(this@MainActivity)
+
+
+
+                    imageRef.downloadUrl.addOnSuccessListener { uri ->
+                        Glide.with(this@MainActivity)
+                            .load(uri)
+                            .placeholder(R.mipmap.ic_book_foreground) // Optional: Placeholder while loading
+                            .error(R.mipmap.ic_book_foreground) // Optional: Error placeholder
+                            .into(imageBookView)
+                    }.addOnFailureListener { exception ->
+                        // Handle failure
+                    }
+
+                    imageBookView.setPadding(10, 10, 10, 10)
+                    imageBookView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.5f)
+
+
                     val deleteButton = ImageButton(this@MainActivity)
                     deleteButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_delete_outline_24))
                     val selectableBackground = TypedValue()
@@ -116,9 +145,8 @@ class MainActivity : AppCompatActivity() {
                     val editButton = ImageButton(this@MainActivity)
                     editButton.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_edit_24_purple))
                     editButton.setBackgroundResource(selectableBackground.resourceId)
-                    editButton.setPadding(0, 72, 0, 0)
-                    deleteButton.setPadding(0, 72, 0, 0)
-
+                    editButton.setPadding(0, 10, 0, 0)
+                    deleteButton.setPadding(0, 10, 0, 0)
                     val row = TableRow(this@MainActivity)
 
                     row.layoutParams = TableLayout.LayoutParams(
@@ -126,12 +154,14 @@ class MainActivity : AppCompatActivity() {
                         TableLayout.LayoutParams.WRAP_CONTENT
                     )
 
+                    row.setPadding(0,10,0,0)
+
 
                    if(privado)
                    {
                        // Set drawable on the left (icon resource)
                        tituloView.setCompoundDrawablesWithIntrinsicBounds(
-                           R.mipmap.ic_book_round, // Left drawable
+                           0, // Left drawable
                            0, // Top drawable
                            R.drawable.baseline_lock_24, // Right drawable
                            0  // Bottom drawable
@@ -141,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                    {
                        // Set drawable on the left (icon resource)
                        tituloView.setCompoundDrawablesWithIntrinsicBounds(
-                           R.mipmap.ic_book_round, // Left drawable
+                          0, // Left drawable
                            0, // Top drawable
                            0, // Right drawable
                            0  // Bottom drawable
@@ -150,10 +180,13 @@ class MainActivity : AppCompatActivity() {
 
 
                     tituloView.ellipsize = TextUtils.TruncateAt.END  // Truncate if text is too long
-                    tituloView.maxLines = 1
+                    tituloView.maxLines = 2
                     tituloView.textSize = 20f
-                    tituloView.gravity = Gravity.CENTER_VERTICAL
+                    // Set font programmatically
+                    val typeface = ResourcesCompat.getFont(this@MainActivity, R.font.almendra_sc)
+                    tituloView.gravity = Gravity.CENTER_HORIZONTAL
                     tituloView.text = titulo
+                    tituloView.setTypeface(typeface, Typeface.NORMAL)
                     tituloView.setPadding(10, 10, 10, 10)
                     tituloView.layoutParams = TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f)
                     if(usuario_uuid != ds.child("usuario_creador").getValue(String::class.java))
@@ -226,9 +259,27 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
 
                     }
+                    imageBookView.isClickable = true
+                    imageBookView.setOnClickListener {
+                        val intent = Intent(this@MainActivity, WatchBook::class.java)
+                        intent.putExtra("id", id)
+                        intent.putExtra("titulo", titulo)
+                        intent.putExtra("autor", autor)
+                        intent.putExtra("sinopsis", sinopsis)
+                        intent.putExtra("path", path)
+                        startActivity(intent)
+
+                    }
+
+
+
+
+                    row.addView(imageBookView)
                     row.addView(tituloView)
                     row.addView(editButton)
                     row.addView(deleteButton)
+
+
                     val data = usuario_uuid?.let { BookData(row, it,privado) }
                     if (data != null) {
                         list_books.add(data)
