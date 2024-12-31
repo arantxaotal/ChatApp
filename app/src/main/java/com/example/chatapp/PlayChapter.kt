@@ -11,6 +11,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -18,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.chatapp.recycleview.item.Chapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -33,6 +35,7 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var playButtonView: Button
     private lateinit var seekBarView: SeekBar
     private lateinit var path: String
+    private lateinit var defaultImage : ImageView
     private lateinit var titulo_path: String
     private lateinit var audioFileRef: StorageReference
     private lateinit var storageReference: StorageReference
@@ -152,11 +155,14 @@ class PlayChapter : AppCompatActivity() {
 
             // Set the video URI to the VideoView
             videoView.setVideoURI(uri)
-            videoView.seekTo( 1 )
 
 
+                Glide.with(this)
+                    .load(uri)  // Microseconds
+                    .error(R.drawable.baseline_mic_24)
+                    .into(defaultImage)
 
-            // Set max SeekBar value to video duration
+
             videoView.setOnPreparedListener {
                 seekBarView.max = videoView.duration
             }
@@ -169,11 +175,18 @@ class PlayChapter : AppCompatActivity() {
             videoView.setOnCompletionListener {
                 playButtonView.setBackgroundResource(R.drawable.baseline_play_circle_24)
             }
+            videoView.setOnErrorListener { _, _, _ ->
+                // If video fails to load, show default image
+                defaultImage.visibility = ImageView.VISIBLE
+                true
+            }
 
 
 
             //BOTON PLAY
             playButtonView.setOnClickListener {
+                videoView.visibility = VideoView.VISIBLE
+                defaultImage.visibility = ImageView.GONE
                 if (!videoView.isPlaying) {
                     updateSeekBar()
                     videoView?.start()
@@ -224,6 +237,7 @@ class PlayChapter : AppCompatActivity() {
     private fun initialize() {
         setContentView(R.layout.activity_play_chapter)
         returnButtonView = findViewById(R.id.btnReturn)
+        defaultImage = findViewById(R.id.defaultImage)
         titulo_cap = findViewById(R.id.titulo_cap)
         titulo_cap.text = intent.getStringExtra("titulo")
         book_id = intent.getStringExtra("book_id").toString()
@@ -245,6 +259,7 @@ class PlayChapter : AppCompatActivity() {
         nextButtonView = findViewById(R.id.nextButton)
         previousButtonView.setBackgroundResource(R.drawable.baseline_skip_previous_24)
         nextButtonView.setBackgroundResource(R.drawable.baseline_skip_next_24)
+
         if (intent.getStringExtra("orden") != null)
         {
             orden = intent.getStringExtra("orden").toString()

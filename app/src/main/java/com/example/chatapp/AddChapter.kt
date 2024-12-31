@@ -126,7 +126,7 @@ class AddChapter : AppCompatActivity() {
                 val updates = mapOf(
                     "nombre_capitulo" to nombre_capitulo.text.toString(),
                     "orden" to orden_capitulo.text.toString().toInt(),
-                    "path" to path_view.text.toString()
+                    "path" to "audios/" +path_view.text.toString()
                 )
 
 
@@ -166,7 +166,7 @@ class AddChapter : AppCompatActivity() {
                                     val updates = mapOf(
                                         "nombre_capitulo" to nombre_capitulo.text.toString(),
                                         "orden" to orden_capitulo.text.toString().toInt(),
-                                        "path" to path_view.text.toString()
+                                        "path" to "audios/"+path_view.text.toString()
                                     )
 
 
