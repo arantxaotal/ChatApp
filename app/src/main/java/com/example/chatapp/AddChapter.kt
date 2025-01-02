@@ -38,6 +38,7 @@ class AddChapter : AppCompatActivity() {
     private var titulo_libro : String? = null
     private var autor_add : String? = null
     private var sinopsis_add : String? = null
+    private var path_file_stored : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         titulo = intent.getStringExtra("titulo").toString()
@@ -45,6 +46,7 @@ class AddChapter : AppCompatActivity() {
         autor_add = intent.getStringExtra("autor")
         sinopsis_add = intent.getStringExtra("sinopsis")
         book_id = intent.getStringExtra("book_id").toString()
+        path_file_stored = intent.getStringExtra("path").toString()
         database = Firebase.database.reference
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chapter)
@@ -71,7 +73,7 @@ class AddChapter : AppCompatActivity() {
             path_view = findViewById(R.id.path)
             nombre_capitulo.text = intent.getStringExtra("titulo")
             orden_capitulo.text = intent.getStringExtra("orden")
-            path_view.text = intent.getStringExtra("path")
+            path_view.text = intent.getStringExtra("path").toString().split("audios/")[1]
             anadir_capitulo_btn.text = "Actualizar"
 
 
@@ -126,7 +128,7 @@ class AddChapter : AppCompatActivity() {
                 val updates = mapOf(
                     "nombre_capitulo" to nombre_capitulo.text.toString(),
                     "orden" to orden_capitulo.text.toString().toInt(),
-                    "path" to "audios/" +path_view.text.toString()
+                    "path" to path_file_stored
                 )
 
 
@@ -137,7 +139,7 @@ class AddChapter : AppCompatActivity() {
                 intent.putExtra("id", book_id)
                 intent.putExtra("autor", autor_add)
                 intent.putExtra("sinopsis", sinopsis_add)
-                intent.putExtra("path", path_view.text.toString())
+                intent.putExtra("path", path_file_stored)
                 startActivity(intent)
             }
             else if(edit && intent.getStringExtra("id") != null && document_file != null) {
@@ -166,7 +168,7 @@ class AddChapter : AppCompatActivity() {
                                     val updates = mapOf(
                                         "nombre_capitulo" to nombre_capitulo.text.toString(),
                                         "orden" to orden_capitulo.text.toString().toInt(),
-                                        "path" to "audios/"+path_view.text.toString()
+                                        "path" to path_file_stored
                                     )
 
 
@@ -176,7 +178,7 @@ class AddChapter : AppCompatActivity() {
                                     intent.putExtra("id", book_id)
                                     intent.putExtra("autor", autor_add)
                                     intent.putExtra("sinopsis", sinopsis_add)
-                                    intent.putExtra("path", path_view.text.toString())
+                                    intent.putExtra("path",path_file_stored)
 
                                     startActivity(intent)
 
@@ -219,7 +221,7 @@ class AddChapter : AppCompatActivity() {
                                         intent.putExtra("id", book_id)
                                         intent.putExtra("autor", autor_add)
                                         intent.putExtra("sinopsis", sinopsis_add)
-                                        intent.putExtra("path", path_view.text.toString())
+                                        intent.putExtra("path", path_file_stored)
                                         startActivity(intent)
 
 
