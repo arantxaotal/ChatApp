@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -35,11 +34,13 @@
          android:id="@+id/tabLayout"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
+         android:fontFamily="sans-serif"
          app:tabIndicatorColor="@color/salmon"
          app:tabSelectedTextColor="@color/purple"
          app:tabTextColor="@color/grey">
          <com.google.android.material.tabs.TabItem
              android:id="@+id/mis_libros"
+             android:fontFamily="sans-serif"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center"
@@ -47,6 +48,7 @@
 
          <com.google.android.material.tabs.TabItem
              android:id="@+id/biblioteca"
+             android:fontFamily="sans-serif"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="Biblioteca" />

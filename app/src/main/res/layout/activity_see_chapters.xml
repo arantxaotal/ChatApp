@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/almendra"
+            android:fontFamily="@font/almendra_sc"
             android:singleLine="true"
             android:clickable="true"
             android:focusable="true"

@@ -39,6 +39,7 @@
             <EditText
                 android:drawableStart="@drawable/baseline_library_books_24"
                 android:id="@+id/titulo"
+                android:fontFamily="sans-serif"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -60,6 +61,7 @@
             android:textColorHint="@color/grey"
             >
             <EditText
+                android:fontFamily="sans-serif"
                 android:drawableStart="@drawable/name"
                 android:id="@+id/autor"
                 android:layout_width="300dp"
@@ -94,6 +96,7 @@
             android:textColorHint="@color/grey"
             >
             <EditText
+                android:fontFamily="sans-serif"
                 android:drawableStart="@drawable/baseline_view_headline_24"
                 android:id="@+id/sinopsis"
                 android:layout_width="300dp"
@@ -111,6 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Libro privado"
+            android:fontFamily="sans-serif"
             android:button="@drawable/baseline_lock_24"
             android:padding="8dp"
             android:layout_margin="8dp" />
@@ -121,6 +125,7 @@
             android:text=""
             android:textSize="20sp"></TextView>
         <TextView
+            android:fontFamily="sans-serif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -141,6 +146,7 @@
 
 
         <Button
+            android:fontFamily="sans-serif"
             android:backgroundTint="@color/salmon"
             android:layout_marginTop="20dp"
             android:id="@+id/crea_libro_btn"

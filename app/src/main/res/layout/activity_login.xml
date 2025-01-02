@@ -50,6 +50,7 @@
             android:layout_gravity="center"
             >
         <EditText
+            android:fontFamily="sans-serif"
             android:drawableStart="@drawable/baseline_email_24"
             android:hint="  Email"
             android:id="@+id/email"
@@ -69,6 +70,7 @@
             android:layout_gravity="center"
             >
         <EditText
+            android:fontFamily="sans-serif"
             android:drawableStart="@drawable/password"
             android:id="@+id/password"
             android:layout_width="300dp"
@@ -78,6 +80,7 @@
             android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
         <Button
+            android:fontFamily="sans-serif"
             android:layout_marginTop="20dp"
             android:id="@+id/iniciar_sesion_btn"
             android:text="@string/iniciar_sesion_btn"

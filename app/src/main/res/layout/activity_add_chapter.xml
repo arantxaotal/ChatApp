@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".AddChapter">
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -38,11 +37,12 @@
             >
 
             <EditText
-                android:drawableStart="@drawable/baseline_drive_file_rename_outline_24"
                 android:id="@+id/namechapter"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/baseline_drive_file_rename_outline_24"
                 android:ems="10"
+                android:fontFamily="sans-serif"
                 android:hint="  Nombre del Capítulo"
                 android:inputType="text"
                 android:visibility="visible" />
@@ -52,16 +52,17 @@
         style="@style/Widget.Design.TextInputLayout"
         android:textColorHint="@color/grey"
         >
+
         <EditText
             android:id="@+id/num_cap"
-            android:hint="Número del capítulo"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:visibility="visible"
             android:drawableStart="@drawable/number_24"
-            />
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:hint="Número del Capítulo"
+            android:inputType="text"
+            android:visibility="visible" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
+            android:fontFamily="sans-serif"
             android:text="Subir audio"
             android:textSize="20sp"></TextView>
 
@@ -91,12 +93,13 @@
             app:srcCompat="@drawable/baseline_file_upload_24" />
 
         <Button
-            android:backgroundTint="@color/salmon"
-            android:layout_marginTop="20dp"
             android:id="@+id/anadir_capitulo_btn"
-            android:text="@string/anadir_capitulo_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/salmon"
+            android:fontFamily="sans-serif"
+            android:text="@string/anadir_capitulo_btn" />
 
 
     </LinearLayout>

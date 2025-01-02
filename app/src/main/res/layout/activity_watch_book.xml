@@ -91,6 +91,7 @@
 
 
         <Button
+            android:fontFamily="sans-serif"
             android:layout_gravity="center"
             android:backgroundTint="@color/salmon"
             android:layout_marginTop="20dp"
