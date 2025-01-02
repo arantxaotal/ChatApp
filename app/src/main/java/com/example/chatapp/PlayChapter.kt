@@ -188,13 +188,9 @@ class PlayChapter : AppCompatActivity() {
             //BOTON PLAY
             playButtonView.setOnClickListener {
 
-                if (File(path_image).extension.equals("m4a", ignoreCase = true)) {
-                    defaultImage.visibility = ImageView.VISIBLE
-                    videoView.visibility = VideoView.GONE
-                } else {
-                    defaultImage.visibility = ImageView.GONE
-                    videoView.visibility = VideoView.VISIBLE
-                }
+                defaultImage.visibility = ImageView.GONE
+                videoView.visibility = VideoView.VISIBLE
+
 
                 if (!videoView.isPlaying) {
                     updateSeekBar()

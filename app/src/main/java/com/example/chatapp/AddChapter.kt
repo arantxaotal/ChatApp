@@ -39,11 +39,13 @@ class AddChapter : AppCompatActivity() {
     private var autor_add : String? = null
     private var sinopsis_add : String? = null
     private var path_file_stored : String? = null
+    private var path_image : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         titulo = intent.getStringExtra("titulo").toString()
         titulo_libro = intent.getStringExtra("titulo_libro")
         autor_add = intent.getStringExtra("autor")
+        path_image = intent.getStringExtra("path_image")
         sinopsis_add = intent.getStringExtra("sinopsis")
         book_id = intent.getStringExtra("book_id").toString()
         path_file_stored = intent.getStringExtra("path").toString()
@@ -139,7 +141,7 @@ class AddChapter : AppCompatActivity() {
                 intent.putExtra("id", book_id)
                 intent.putExtra("autor", autor_add)
                 intent.putExtra("sinopsis", sinopsis_add)
-                intent.putExtra("path", path_file_stored)
+                intent.putExtra("path", path_image)
                 startActivity(intent)
             }
             else if(edit && intent.getStringExtra("id") != null && document_file != null) {
@@ -178,7 +180,7 @@ class AddChapter : AppCompatActivity() {
                                     intent.putExtra("id", book_id)
                                     intent.putExtra("autor", autor_add)
                                     intent.putExtra("sinopsis", sinopsis_add)
-                                    intent.putExtra("path",path_file_stored)
+                                    intent.putExtra("path",path_image)
 
                                     startActivity(intent)
 
@@ -221,7 +223,7 @@ class AddChapter : AppCompatActivity() {
                                         intent.putExtra("id", book_id)
                                         intent.putExtra("autor", autor_add)
                                         intent.putExtra("sinopsis", sinopsis_add)
-                                        intent.putExtra("path", path_file_stored)
+                                        intent.putExtra("path", path_image)
                                         startActivity(intent)
 
 
