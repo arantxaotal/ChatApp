@@ -37,6 +37,7 @@
             >
 
             <EditText
+                android:paddingTop="20dp"
                 android:id="@+id/namechapter"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
@@ -69,7 +70,9 @@
 
     <TextView
             android:id="@+id/path"
-            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:text=""
