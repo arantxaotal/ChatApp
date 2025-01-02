@@ -19,6 +19,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.SearchView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabs : TabLayout
     private var all : Boolean = false
     private lateinit var viewPager: ViewPager2
+    private lateinit var list_books : MutableList<BookData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         tabs =  findViewById(R.id.tabLayout)
         fetchTable(false)
 
+
         // Handle tab selection to start a new activity
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -67,11 +70,13 @@ class MainActivity : AppCompatActivity() {
                 when (position) {
                     0 -> {
                         resetTable()
-                        fetchTable(false)
+                        all = false
+                        fetchTable(all)
                     }
                     1 -> {
+                        all = true
                         resetTable()
-                        fetchTable(true)
+                        fetchTable(all)
 
                     }
                 }
@@ -94,6 +99,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+
+
     private fun fetchTable(showall : Boolean) {
 
         databaseRef = FirebaseDatabase.getInstance().getReference("Books/")
@@ -102,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         val query = databaseRef.orderByChild("titulo")
         val eventListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var list_books = mutableListOf<BookData>()
+                list_books = mutableListOf<BookData>()
                 for (ds in dataSnapshot.children) {
                     val titulo = ds.child("titulo").getValue(String::class.java)
                     val autor = ds.child("autor").getValue(String::class.java)
@@ -280,7 +288,7 @@ class MainActivity : AppCompatActivity() {
                     row.addView(deleteButton)
 
 
-                    val data = usuario_uuid?.let { BookData(row, it,privado) }
+                    val data = usuario_uuid?.let { BookData(row, it,privado, titulo!!) }
                     if (data != null) {
                         list_books.add(data)
                     }
@@ -315,7 +323,44 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         var Inflater = menuInflater
         Inflater.inflate(R.menu.menu_principal, menu)
+
+        // Configurar SearchView
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.queryHint = "Buscar..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { filterResults(it) }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { filterResults(it) }
+                return true
+            }
+        })
         return super.onCreateOptionsMenu(menu)
+
+    }
+
+    private fun filterResults(query: String) {
+        val usuario_uuid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        book_table_view = findViewById(R.id.book_table)
+        book_table_view.removeAllViews()
+        if (all == true)
+        {
+            for (dat in list_books.filter { (it.privado == false) and it.titulo.contains(query, ignoreCase = true) }) {
+                book_table_view.addView(dat.row)
+
+            }
+        }else
+        {
+            for (dat in list_books.filter { (it.usuariouuid == usuario_uuid) and it.titulo.contains(query, ignoreCase = true) }) {
+                book_table_view.addView(dat.row)
+
+            }
+        }
 
     }
 

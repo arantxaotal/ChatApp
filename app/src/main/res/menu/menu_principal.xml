@@ -4,6 +4,14 @@
     tools:context="com.example.myapplication.MainActivity"
 
     >
+
+    <!-- Ícono de búsqueda -->
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/baseline_search_24"
+        android:title="Buscar"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
     
 
     <item
