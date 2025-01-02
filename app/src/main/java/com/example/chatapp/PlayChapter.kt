@@ -51,6 +51,7 @@ class PlayChapter : AppCompatActivity() {
     private lateinit var nextChapter: Chapter
     private lateinit var returnButtonView: ImageButton
     private lateinit var videoView: VideoView
+    private lateinit var tituloLibro : TextView
     private val handler = Handler()
 
 
@@ -331,6 +332,9 @@ class PlayChapter : AppCompatActivity() {
                 Log.e("Firebase", "Error: ${error.message}")
             }
         })
+
+        tituloLibro =    findViewById(R.id.titulo_libro)
+        tituloLibro.text = titulo_libro
 
 
     }

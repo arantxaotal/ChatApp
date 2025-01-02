@@ -30,7 +30,24 @@
             android:contentDescription="Back Button"
             android:src="@drawable/baseline_keyboard_backspace_24" />
 
-
+        <TextView
+            android:id="@+id/titulo_libro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:fontFamily="@font/almendra_sc"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Libro"
+            android:textColor="@color/salmon"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            tools:visibility="visible" />
         <TextView
             android:id="@+id/titulo_cap"
             android:layout_width="match_parent"
