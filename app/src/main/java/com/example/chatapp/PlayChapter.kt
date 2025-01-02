@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -185,8 +186,15 @@ class PlayChapter : AppCompatActivity() {
 
             //BOTON PLAY
             playButtonView.setOnClickListener {
-                videoView.visibility = VideoView.VISIBLE
-                defaultImage.visibility = ImageView.GONE
+
+                if (File(path_image).extension.equals("m4a", ignoreCase = true)) {
+                    defaultImage.visibility = ImageView.VISIBLE
+                    videoView.visibility = VideoView.GONE
+                } else {
+                    defaultImage.visibility = ImageView.GONE
+                    videoView.visibility = VideoView.VISIBLE
+                }
+
                 if (!videoView.isPlaying) {
                     updateSeekBar()
                     videoView?.start()

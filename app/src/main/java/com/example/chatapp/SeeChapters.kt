@@ -102,11 +102,13 @@ class SeeChapters : AppCompatActivity() {
 
         crear_capitulo_btn.setOnClickListener{
             val intent = Intent(this, AddChapter::class.java)
-            intent.putExtra("id", id_libro)
-            intent.putExtra("titulo", titulo_libro.text.toString())
+            intent.putExtra("titulo_libro", titulo_libro.text)
+            intent.putExtra("book_id", id_libro)
+            intent.putExtra("orden", orden.toString())
             intent.putExtra("autor", autor)
-            intent.putExtra("sinopsis", sinopsis)
-            intent.putExtra("path", path)
+            intent.putExtra("sinopsis",sinopsis)
+            intent.putExtra("usuario_creador", usuario_uuid)
+            intent.putExtra("edit", false)
             startActivity(intent)
         }
 
@@ -279,7 +281,7 @@ class SeeChapters : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val values = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, "recorded_audio_${System.currentTimeMillis()}")
-                put(MediaStore.MediaColumns.MIME_TYPE, "audio/mpeg")
+                put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp4")
                 put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_MUSIC + "/BookifyRecordings")
             }
             val resolver = contentResolver
@@ -289,7 +291,7 @@ class SeeChapters : AppCompatActivity() {
                 val descriptor = resolver.openFileDescriptor(audioUri!!, "w")?.fileDescriptor
                 mediaRecorder = MediaRecorder().apply {
                     setAudioSource(MediaRecorder.AudioSource.MIC)
-                    setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                     setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                     setOutputFile(descriptor)
                     prepare()
