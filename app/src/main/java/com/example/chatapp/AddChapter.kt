@@ -95,6 +95,7 @@ class AddChapter : AppCompatActivity() {
                     path_file = document_file!!.uri.path.toString()
                     path_view = findViewById(R.id.path)
                     path_view.text = name_file
+                    path_file_stored = "audios/${name_file}"
                 }
             }
 
@@ -136,6 +137,7 @@ class AddChapter : AppCompatActivity() {
 
 
                 add_chapter.updateChildren(updates)
+                Toast.makeText(this, "Reproduciendo audio", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@AddChapter, SeeChapters::class.java)
                 intent.putExtra("titulo_libro", titulo_libro)
                 intent.putExtra("id", book_id)
@@ -175,6 +177,7 @@ class AddChapter : AppCompatActivity() {
 
 
                                     add_chapter.updateChildren(updates)
+                                    Toast.makeText(this@AddChapter, "Audio subido correctamente", Toast.LENGTH_SHORT).show()
                                     val intent = Intent(this@AddChapter, SeeChapters::class.java)
                                     intent.putExtra("titulo_libro", titulo_libro)
                                     intent.putExtra("id", book_id)
