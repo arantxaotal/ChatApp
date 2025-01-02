@@ -278,8 +278,8 @@ class SeeChapters : AppCompatActivity() {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val values = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, "recorded_audio_${System.currentTimeMillis()}.mp4")
-                put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp4")
+                put(MediaStore.MediaColumns.DISPLAY_NAME, "recorded_audio_${System.currentTimeMillis()}")
+                put(MediaStore.MediaColumns.MIME_TYPE, "audio/mpeg")
                 put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_MUSIC + "/BookifyRecordings")
             }
             val resolver = contentResolver
@@ -289,7 +289,7 @@ class SeeChapters : AppCompatActivity() {
                 val descriptor = resolver.openFileDescriptor(audioUri!!, "w")?.fileDescriptor
                 mediaRecorder = MediaRecorder().apply {
                     setAudioSource(MediaRecorder.AudioSource.MIC)
-                    setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                    setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
                     setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                     setOutputFile(descriptor)
                     prepare()
